@@ -3,12 +3,17 @@
 namespace App;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Hash;
 
 class User extends Authenticatable
 {
     use Notifiable;
+    use SoftDeletes;
+
+    protected $table = 'users';
 
     /**
      * The attributes that are mass assignable.
@@ -36,4 +41,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function setPasswordAttribute($password)
+    {
+        if ($password !== null & $password !== "") {
+            $this->attributes['password'] = Hash::make($password);
+        }
+    }
+
 }
