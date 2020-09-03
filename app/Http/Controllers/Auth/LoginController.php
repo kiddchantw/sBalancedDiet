@@ -5,6 +5,10 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
+use App\User;
 
 class LoginController extends Controller
 {
@@ -37,4 +41,65 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+
+    public function loginAPI(Request $request)
+    {
+        $credentials = $request->only('name', 'password','email');
+        if (Auth::attempt($credentials)) {
+            do {
+                $loginToken = Str::random(60);
+                $checkTokenExist = User::where('remember_token', '=', $loginToken)->first();
+            } while ($checkTokenExist);
+
+            $userL = User::where('email', '=', $request->email)->first();
+            $userL->remember_token =  $loginToken;
+            $userL->token_expire_time = date('Y/m/d H:i:s', time() + 10 * 60);
+            $userL->save();
+            $response = array("remember_token" => $userL->remember_token, "token_expire_time" => $userL->token_expire_time);
+
+           // Auth::login($userL, true);
+//            $id = Auth::id();
+//            dd(Auth::check());
+//            dd(Auth::user());
+        } else {
+            $response = "login error";
+        }
+
+        return response()->json(['message' => $response], 200);
+    }
+
+
+    public function userInfo(Request $request)
+    {
+        $inputToken = $request->remember_token;
+        if ($inputToken !== null & $inputToken !== "") {
+            $userA = User::where('remember_token', '=', $inputToken)->first();
+            if ($userA ){
+                return $userA ;
+            }
+        }
+    }
+
+
+
+    public function logout(Request $request)
+    {
+//         if (Auth::check()) {
+//             dd("1");
+//         } else {
+//             dd("2");
+//         }
+
+
+        $user = $request->user();
+        $user->remember_token = Null;
+        $user->token_expire_time = Null;
+        $user->save();
+
+        return response()->json(['message' => "logout success!"], 200);
+    }
+
+
+
 }

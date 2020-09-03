@@ -15,6 +15,8 @@ class User extends Authenticatable
 
     protected $table = 'users';
 
+    protected $guarded = ['id'];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -22,6 +24,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name', 'email', 'password',
+       // 'email_verified_at','updated_at','created_at','remember_token','token_expire_time','deleted_at'
     ];
 
     /**
@@ -31,6 +34,7 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password', 'remember_token',
+        'email_verified_at','updated_at','deleted_at'
     ];
 
     /**

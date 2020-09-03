@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -69,5 +70,30 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+    }
+
+    public function registerAPI(Request $request)
+    {
+
+        //method 1 ok
+//        $newRegister = new User;
+//        $newRegister->name = $request->name;
+//        $newRegister->email = $request->email;
+//        $newRegister->password = $request->password;
+//        $newRegister->save();
+
+        //method 2 可以寫入但會報
+        //SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '' for key 'users.users_email_unique'
+        //在model加入 guarded 屬性（因為 Eloquent 預設會防止批量賦值）。才不會報錯
+        //protected $guarded = ['id', 'account_id'];
+
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => $request->password,
+        ]);
+
+
+        return response()->json(['message' => 'register success , please login '], 201);
     }
 }

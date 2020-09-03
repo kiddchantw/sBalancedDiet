@@ -81,7 +81,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Laravel
+                    balanced diet project
                 </div>
 
                 <div class="links">
