@@ -5,8 +5,6 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/RegisterController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/RegisterController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/welcome.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/welcome.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -153,7 +151,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1598971818645</updated>
-      <workItem from="1598971820417" duration="11489000" />
+      <workItem from="1598971820417" duration="18444000" />
     </task>
     <servers />
   </component>
@@ -161,10 +159,10 @@
     <option name="version" value="3" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="342" y="233" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1599103858851">
+    <state x="342" y="233" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1599232016071">
       <screen x="0" y="23" width="1757" height="1097" />
     </state>
-    <state x="342" y="233" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1757.1097@0.23.1757.1097" timestamp="1599103858851" />
+    <state x="342" y="233" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1757.1097@0.23.1757.1097" timestamp="1599232016071" />
     <state x="379" y="210" key="SettingsEditor" timestamp="1599125101057">
       <screen x="0" y="23" width="1757" height="1097" />
     </state>

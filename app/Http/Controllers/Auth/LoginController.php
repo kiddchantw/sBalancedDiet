@@ -56,12 +56,8 @@ class LoginController extends Controller
             $userL->remember_token =  $loginToken;
             $userL->token_expire_time = date('Y/m/d H:i:s', time() + 10 * 60);
             $userL->save();
-            $response = array("remember_token" => $userL->remember_token, "token_expire_time" => $userL->token_expire_time);
+            $response = array("remember_token" => $userL->remember_token, "token_expire_time" => $userL->token_expire_time) ;
 
-           // Auth::login($userL, true);
-//            $id = Auth::id();
-//            dd(Auth::check());
-//            dd(Auth::user());
         } else {
             $response = "login error";
         }
@@ -72,9 +68,9 @@ class LoginController extends Controller
 
     public function userInfo(Request $request)
     {
-        $inputToken = $request->remember_token;
+        $inputToken = $request->remember_token ;
         if ($inputToken !== null & $inputToken !== "") {
-            $userA = User::where('remember_token', '=', $inputToken)->first();
+            $userA = User::where('remember_token', '=', $inputToken)->first() ;
             if ($userA ){
                 return $userA ;
             }
@@ -83,15 +79,8 @@ class LoginController extends Controller
 
 
 
-    public function logout(Request $request)
+    public function logoutAPI(Request $request)
     {
-//         if (Auth::check()) {
-//             dd("1");
-//         } else {
-//             dd("2");
-//         }
-
-
         $user = $request->user();
         $user->remember_token = Null;
         $user->token_expire_time = Null;

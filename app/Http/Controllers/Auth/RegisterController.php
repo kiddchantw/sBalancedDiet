@@ -9,6 +9,7 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 
 class RegisterController extends Controller
 {
@@ -74,6 +75,32 @@ class RegisterController extends Controller
 
     public function registerAPI(Request $request)
     {
+        try {
+            $rules = [
+                "name" => "required|string | between:6,12",
+                "email" => "required| email | unique:users",
+                "password" => "required|string| between:6,12 | regex:/^[A-Za-z0-9]+$/",
+            ];
+            $message = [   // 欄位名稱.驗證方法名稱
+                "name.required" => "請輸入名稱",
+                "email.required" => "請輸入email",
+                "password.required" => "請輸入密碼",
+                "name.between" => "name 字數需6~12",
+                "password.between" => "password 字數需6~12",
+                "email.email" => "email格式錯誤",
+                "password.regex" => "請勿輸入特殊符號",
+                "email.unique" => "email已使用",
+            ];
+            $validResult = $request->validate($rules, $message);
+        } catch (ValidationException $exception) {
+
+            $errorObject = $exception->validator->getMessageBag()->getMessages();
+            $errorMessage = '';
+            foreach($errorObject as $key => $value) {
+                $errorMessage =  $value[0];
+            }
+            return response()->json(['message' => $errorMessage], 201);
+        }
 
         //method 1 ok
 //        $newRegister = new User;
