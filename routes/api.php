@@ -19,6 +19,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
+//Route::middleware(['apiLog'])->group(function () {
+
 Route::post('register', 'Auth\RegisterController@registerAPI');
 Route::post('login', 'Auth\LoginController@loginAPI');
 
@@ -27,5 +29,5 @@ Route::middleware(['checkToken'])->group(function () {
     Route::post('logout', 'Auth\LoginController@logoutAPI');
 });
 
-
+//});
 

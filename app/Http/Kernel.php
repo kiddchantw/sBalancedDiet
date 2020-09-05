@@ -21,6 +21,10 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
+
+        //放全域變數，所有的api都會經過這個middleware
+        \App\Http\Middleware\apiLog::class,
+
     ];
 
     /**
@@ -64,5 +68,6 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'checkToken' => \App\Http\Middleware\checkToken::class,
+//        'apiLog' => \App\Http\Middleware\apiLog::class,
     ];
 }

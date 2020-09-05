@@ -77,8 +77,8 @@ class RegisterController extends Controller
     {
         try {
             $rules = [
-                "name" => "required|string | between:6,12",
-                "email" => "required| email | unique:users",
+                "name" => "required|string | between:6,12 ",
+                "email" => "required| email | unique:users,email",
                 "password" => "required|string| between:6,12 | regex:/^[A-Za-z0-9]+$/",
             ];
             $message = [   // 欄位名稱.驗證方法名稱
