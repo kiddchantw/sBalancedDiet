@@ -69,7 +69,6 @@ return [
 
     'timezone' => 'Asia/Taipei',
 
-
     /*
     |--------------------------------------------------------------------------
     | Application Locale Configuration
