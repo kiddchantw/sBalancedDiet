@@ -47,7 +47,6 @@ class LoginController extends Controller
 
     public $messageValidate = [
         "email.required" => "請輸入email",
-        "email.unique" => "email exist",
         "email.email" => "請確認格式",
         "password.required" => "請輸入password",
         "password.regex" => "請確認password符合 A-Za-z0-9 ",
@@ -72,7 +71,7 @@ class LoginController extends Controller
     public function loginAPI(Request $request)
     {
         $rules = [
-            "email" => "required| email | unique:users.email",
+            "email" => "required| email ",
             "password" => "required|string | between:6,12 | regex:/^[A-Za-z0-9]+$/",
         ];
         $validResult = $this->customValidate($request, $rules);
