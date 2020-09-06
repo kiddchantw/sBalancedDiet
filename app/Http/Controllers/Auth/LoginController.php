@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use App\User;
+use Illuminate\Validation\ValidationException;
+
 
 class LoginController extends Controller
 {
@@ -43,8 +45,42 @@ class LoginController extends Controller
     }
 
 
+    public $messageValidate = [
+        "email.required" => "請輸入email",
+        "email.unique" => "email exist",
+        "email.email" => "請確認格式",
+        "password.required" => "請輸入password",
+        "password.regex" => "請確認password符合 A-Za-z0-9 ",
+        "password.between" => "password 字數需6~12",
+        "name.required" => "請輸入name",
+        "name.unique" => "name exist",
+    ];
+
+
+
+    public function customValidate(Request $request, array $rulesInput)
+    {
+        try {
+            $this->validate($request, $rulesInput, $this->messageValidate);
+        } catch (ValidationException $exception) {
+            $errorMessage = $exception->validator->errors()->first();
+
+            return  $errorMessage;
+        }
+    }
+
     public function loginAPI(Request $request)
     {
+        $rules = [
+            "email" => "required| email | unique:users.email",
+            "password" => "required|string | between:6,12 | regex:/^[A-Za-z0-9]+$/",
+        ];
+        $validResult = $this->customValidate($request, $rules);
+        if ($validResult != Null) {
+            return response()->json(['message' => $validResult], 400);
+        }
+
+
         $credentials = $request->only('name', 'password','email');
         if (Auth::attempt($credentials)) {
             do {
