@@ -99,7 +99,7 @@ class RegisterController extends Controller
             foreach($errorObject as $key => $value) {
                 $errorMessage =  $value[0];
             }
-            return response()->json(['message' => $errorMessage], 201);
+            return response()->json(['message' => $errorMessage], 400);
         }
 
         //method 1 ok
@@ -121,6 +121,6 @@ class RegisterController extends Controller
         ]);
 
 
-        return response()->json(['message' => 'register success , please login '], 201);
+        return response()->json(['message' => 'register success , please login '], 200);
     }
 }
