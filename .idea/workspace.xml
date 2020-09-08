@@ -3,6 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="4d21c94e-af77-4809-a87f-8e982a1bac65" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/filesystems.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/filesystems.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -152,7 +156,9 @@
       <updated>1598971818645</updated>
       <workItem from="1598971820417" duration="22143000" />
       <workItem from="1599327839129" duration="1670000" />
-      <workItem from="1599399754451" duration="3058000" />
+      <workItem from="1599399754451" duration="5329000" />
+      <workItem from="1599494724560" duration="249000" />
+      <workItem from="1599535204577" duration="4533000" />
     </task>
     <servers />
   </component>
@@ -160,17 +166,17 @@
     <option name="version" value="3" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="342" y="233" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1599232016071">
+    <state x="342" y="233" width="1071" height="714" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1599554196034">
       <screen x="0" y="23" width="1757" height="1097" />
     </state>
-    <state x="342" y="233" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1757.1097@0.23.1757.1097" timestamp="1599232016071" />
+    <state x="342" y="233" width="1071" height="714" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1757.1097@0.23.1757.1097" timestamp="1599554196034" />
     <state x="379" y="210" key="SettingsEditor" timestamp="1599125101057">
       <screen x="0" y="23" width="1757" height="1097" />
     </state>
     <state x="379" y="210" key="SettingsEditor/0.23.1757.1097@0.23.1757.1097" timestamp="1599125101057" />
-    <state x="543" y="268" width="670" height="676" key="search.everywhere.popup" timestamp="1599442800269">
+    <state x="543" y="268" width="670" height="676" key="search.everywhere.popup" timestamp="1599545674816">
       <screen x="0" y="23" width="1757" height="1097" />
     </state>
-    <state x="543" y="268" width="670" height="676" key="search.everywhere.popup/0.23.1757.1097@0.23.1757.1097" timestamp="1599442800269" />
+    <state x="543" y="268" width="670" height="676" key="search.everywhere.popup/0.23.1757.1097@0.23.1757.1097" timestamp="1599545674816" />
   </component>
 </project>

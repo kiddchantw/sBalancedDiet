@@ -27,6 +27,8 @@ Route::post('login', 'Auth\LoginController@loginAPI');
 Route::middleware(['checkToken'])->group(function () {
     Route::post('info', 'Auth\LoginController@userInfo');
     Route::post('logout', 'Auth\LoginController@logoutAPI');
+    Route::post('uploadImageAPI', 'Auth\LoginController@uploadImageAPI');
+
 });
 
 //});

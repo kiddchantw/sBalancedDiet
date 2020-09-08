@@ -7,6 +7,7 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use App\User;
 use Illuminate\Validation\ValidationException;
@@ -125,5 +126,17 @@ class LoginController extends Controller
     }
 
 
+    public function uploadImageAPI(Request $request)
+    {
+        $userPhotoId = $request->user()->id;
+//dd($userPhotoId);
+        $image = $request->file('photo');
+        $filename = $image->getClientOriginalName();
+        Storage::disk('publicUser')->put($filename, file_get_contents($image->getRealPath()));
+        $photoURL = Storage::disk('publicUser')->url($filename);
+        User::where('id','=',$userPhotoId)->update(['image_path'=>$photoURL]);
+
+        return response()->json(['url'=> $photoURL],200);
+    }
 
 }
