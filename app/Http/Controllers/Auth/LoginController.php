@@ -129,14 +129,18 @@ class LoginController extends Controller
     public function uploadImageAPI(Request $request)
     {
         $userPhotoId = $request->user()->id;
-//dd($userPhotoId);
         $image = $request->file('photo');
-        $filename = $image->getClientOriginalName();
+//        $filename = $image->getClientOriginalName();
+        $filename = $userPhotoId."_".$image->getClientOriginalName();
+
         Storage::disk('publicUser')->put($filename, file_get_contents($image->getRealPath()));
         $photoURL = Storage::disk('publicUser')->url($filename);
         User::where('id','=',$userPhotoId)->update(['image_path'=>$photoURL]);
 
-        return response()->json(['url'=> $photoURL],200);
+        $response = array('url'=> $photoURL) ;
+        return response()->json(['message' => $response], 200);
+
+//        return response()->json(['url'=> $photoURL],200);
     }
 
 }
