@@ -2,7 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4d21c94e-af77-4809-a87f-8e982a1bac65" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/balancedDiet.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/balancedDiet.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/ResetPasswordController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/ResetPasswordController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Middleware/checkToken.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Middleware/checkToken.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -127,6 +133,9 @@
       <path value="$PROJECT_DIR$/vendor/composer" />
       <path value="$PROJECT_DIR$/vendor/guzzlehttp/guzzle" />
       <path value="$PROJECT_DIR$/vendor/ramsey/uuid" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/cache" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/event-manager" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/dbal" />
     </include_path>
   </component>
   <component name="ProjectId" id="1gukMZbLYMEQXuqhGLLZGKzM1ST" />
@@ -160,7 +169,7 @@
       <workItem from="1599327839129" duration="1670000" />
       <workItem from="1599399754451" duration="5329000" />
       <workItem from="1599494724560" duration="249000" />
-      <workItem from="1599535204577" duration="9508000" />
+      <workItem from="1599535204577" duration="14756000" />
     </task>
     <servers />
   </component>
@@ -172,13 +181,17 @@
       <screen x="0" y="23" width="1757" height="1097" />
     </state>
     <state x="342" y="233" width="1071" height="714" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1757.1097@0.23.1757.1097" timestamp="1599554196034" />
+    <state x="616" y="333" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1599643360567">
+      <screen x="0" y="23" width="1757" height="1097" />
+    </state>
+    <state x="616" y="333" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.23.1757.1097@0.23.1757.1097" timestamp="1599643360567" />
     <state x="379" y="210" key="SettingsEditor" timestamp="1599125101057">
       <screen x="0" y="23" width="1757" height="1097" />
     </state>
     <state x="379" y="210" key="SettingsEditor/0.23.1757.1097@0.23.1757.1097" timestamp="1599125101057" />
-    <state x="543" y="268" width="670" height="676" key="search.everywhere.popup" timestamp="1599545674816">
+    <state x="543" y="268" width="670" height="676" key="search.everywhere.popup" timestamp="1599642309036">
       <screen x="0" y="23" width="1757" height="1097" />
     </state>
-    <state x="543" y="268" width="670" height="676" key="search.everywhere.popup/0.23.1757.1097@0.23.1757.1097" timestamp="1599545674816" />
+    <state x="543" y="268" width="670" height="676" key="search.everywhere.popup/0.23.1757.1097@0.23.1757.1097" timestamp="1599642309036" />
   </component>
 </project>

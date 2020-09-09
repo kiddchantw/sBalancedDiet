@@ -36,7 +36,7 @@ class checkToken
                     return response()->json(['message' => 'User Token expired '], 401);
                 }
             } else {
-                return response()->json(['message' => 'User Token not found in checkToken!'], 401);
+                return response()->json(['message' => 'User Token not found '], 401);
             }
         } else {
             return response()->json(['message' => 'User Token ?'], 401);

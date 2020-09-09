@@ -18,8 +18,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
+//改在kernel全域處理了
 //Route::middleware(['apiLog'])->group(function () {
+//});
 
 Route::post('register', 'Auth\RegisterController@registerAPI');
 Route::post('login', 'Auth\LoginController@loginAPI');
@@ -28,8 +29,8 @@ Route::middleware(['checkToken'])->group(function () {
     Route::post('info', 'Auth\LoginController@userInfo');
     Route::post('logout', 'Auth\LoginController@logoutAPI');
     Route::post('uploadImageAPI', 'Auth\LoginController@uploadImageAPI');
+    Route::post('reset', 'Auth\LoginController@resetPasswordAPI');
 
 });
 
-//});
 
