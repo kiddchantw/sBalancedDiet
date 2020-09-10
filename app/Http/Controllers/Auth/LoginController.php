@@ -79,7 +79,9 @@ class LoginController extends Controller
         ];
         $validResult = $this->customValidate($request, $rules);
         if ($validResult != Null) {
-            return response()->json(['message' => $validResult], 400);
+//            return response()->json(['message' => $validResult], 400);
+            return response()->json(['success' => false, 'message' =>$validResult , 'data'=> null ],400);
+
         }
 
 
@@ -99,12 +101,16 @@ class LoginController extends Controller
                 "token_expire_time" => $userL->token_expire_time,
                 "user_id" => $userL->id
             );
+            return response()->json(['success' => true , 'message' =>"" , 'data'=>$response ],200);
+
 
         } else {
             $response = "login error";
+            return response()->json(['success' => false, 'message' =>$response , 'data'=> null ],400);
+
         }
 
-        return response()->json(['message' => $response], 200);
+//        return response()->json(['message' => $response], 200);
     }
 
 //API_3
@@ -127,8 +133,8 @@ class LoginController extends Controller
         $user->remember_token = Null;
         $user->token_expire_time = Null;
         $user->save();
-
-        return response()->json(['message' => "logout success!"], 200);
+        return response()->json(['success' => true , 'message' =>"logout success!" , 'data'=>null ],200);
+//        return response()->json(['message' => "logout success!"], 200);
     }
 
 
@@ -146,7 +152,9 @@ class LoginController extends Controller
         User::where('id', '=', $userPhotoId)->update(['image_path' => $photoURL]);
 
         $response = array('url' => $photoURL);
-        return response()->json(['message' => $response], 200);
+//        return response()->json(['message' => $response], 200);
+        return response()->json(['success' => true , 'message' =>"upload success" , 'data'=>$response ],200);
+
     }
 
 
@@ -158,7 +166,9 @@ class LoginController extends Controller
         ];
         $validResult = $this->customValidate($request, $rules6);
         if ($validResult != Null) {
-            return response()->json(['message' => $validResult], 400);
+//            return response()->json(['message' => $validResult], 400);
+            return response()->json(['success' => false, 'message' =>$validResult , 'data'=> null ],400);
+
         }
 
         $userId = $request->user()->id;
@@ -172,7 +182,8 @@ class LoginController extends Controller
 
 
 
-        return response()->json(['message' => "reset success , please login "], 200);
+//        return response()->json(['message' => "reset success , please login "], 200);
+        return response()->json(['success' => true , 'message' =>"reset success" , 'data'=>null ],200);
 
 
 

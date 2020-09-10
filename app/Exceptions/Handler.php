@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 
@@ -50,6 +51,13 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
+//        return parent::render($request, $exception);
+//        ModelNotFoundException
+        if ($exception instanceof ModelNotFoundException) {
+//            return response()->json(['message' => 'model id Not Found'], 404);
+            return response()->json(['success' => false, 'message' =>"input id error" , 'data'=> null ],400);
+
+        }
         return parent::render($request, $exception);
     }
 }

@@ -38,21 +38,22 @@ Route::middleware(['checkToken'])->group(function () {
 //    Route::resource('bio', 'bioRecords');
 //    Route::apiResource('bio', 'bioRecords');
 
-Route::get('bio', 'bioRecords@index');
-Route::post('bio', 'bioRecords@store');
+//Route::post('bio', 'bioRecords@store');
 //url:/data/
-Route::get('userBio/{id}', 'bioRecords@showByUser');
+//Route::get('userBio/{id}', 'bioRecords@showByUser');
 
-Route::get('bio/{id}', 'bioRecords@show');
+//Route::get('bio/{id}', 'bioRecords@show');
 
-Route::delete('bio/{id}','bioRecords@destroy');
+//Route::delete('bio/{id}','bioRecords@destroy');
 //Route::delete('bio/{id}','bioRecords@destroy');
 //->name('bio.destroy');
 //url:/data/{bio_id}
 
 
-Route::PUT('bio/{id}', 'bioRecords@update');
+//Route::PUT('bio/{id}', 'bioRecords@update');
     //->name('bio.update');
 //url:/data/{bio_id}
 
 
+Route::apiResource('bioProfile', 'BioProfileController');
+Route::get('userBio/{id}', 'BioProfileController@showByUser');

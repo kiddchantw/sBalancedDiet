@@ -3,9 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="4d21c94e-af77-4809-a87f-8e982a1bac65" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Bio.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Bio.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Exceptions/Handler.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Exceptions/Handler.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/RegisterController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/RegisterController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/bioRecords.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/bioRecords.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -146,6 +147,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
     <property name="settings.editor.selected.configurable" value="reference.webide.settings.project.settings.php" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
@@ -167,7 +169,7 @@
       <workItem from="1599327839129" duration="1670000" />
       <workItem from="1599399754451" duration="5329000" />
       <workItem from="1599494724560" duration="249000" />
-      <workItem from="1599535204577" duration="30461000" />
+      <workItem from="1599535204577" duration="42080000" />
     </task>
     <servers />
   </component>
@@ -175,14 +177,19 @@
     <option name="version" value="3" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="342" y="233" width="1071" height="714" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1599554196034">
+    <state x="342" y="233" width="1071" height="752" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1599753636487">
       <screen x="0" y="23" width="1757" height="1097" />
     </state>
-    <state x="342" y="233" width="1071" height="714" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1757.1097@0.23.1757.1097" timestamp="1599554196034" />
-    <state x="616" y="333" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1599643360567">
+    <state x="342" y="233" width="1071" height="752" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1757.1097@0.23.1757.1097" timestamp="1599753636487" />
+    <state x="616" y="333" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1599750760277">
       <screen x="0" y="23" width="1757" height="1097" />
     </state>
-    <state x="616" y="333" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.23.1757.1097@0.23.1757.1097" timestamp="1599643360567" />
+    <state x="545" y="-758" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/-128.-1057.1920.1057/0.23.1757.1097@-128.-1057.1920.1057" timestamp="1599732801997" />
+    <state x="616" y="333" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.23.1757.1097@0.23.1757.1097" timestamp="1599750760277" />
+    <state x="583" y="-677" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1599730319373">
+      <screen x="-128" y="-1057" width="1920" height="1057" />
+    </state>
+    <state x="583" y="-677" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/-128.-1057.1920.1057/0.23.1757.1097@-128.-1057.1920.1057" timestamp="1599730319373" />
     <state x="379" y="210" key="SettingsEditor" timestamp="1599125101057">
       <screen x="0" y="23" width="1757" height="1097" />
     </state>

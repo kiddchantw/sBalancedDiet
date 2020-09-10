@@ -97,10 +97,8 @@ class bioRecords extends Controller
     {
 //        dd('delete' );
 
-
         $id = intval($id);
         $bioD =  Bio::where('id', '=', $id);
-
 
 //        //return
         if ($bioD->exists()){
