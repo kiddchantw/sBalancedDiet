@@ -29,9 +29,9 @@
  
 - [ ]  Restful API : bio (only 體重)
  
-- [ ]  api: 忘記密碼
+- [x]  api: 忘記密碼
 
-- [ ]  api: 修改密碼
+- [x]  api: 修改密碼
 
 - [ ]  api: 修改name
 

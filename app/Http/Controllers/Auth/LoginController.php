@@ -94,7 +94,11 @@ class LoginController extends Controller
             $userL->remember_token = $loginToken;
             $userL->token_expire_time = date('Y/m/d H:i:s', time() + 10 * 60);
             $userL->save();
-            $response = array("remember_token" => $userL->remember_token, "token_expire_time" => $userL->token_expire_time);
+            $response = array(
+                "remember_token" => $userL->remember_token,
+                "token_expire_time" => $userL->token_expire_time,
+                "user_id" => $userL->id
+            );
 
         } else {
             $response = "login error";
@@ -164,17 +168,9 @@ class LoginController extends Controller
         $resetPW = Hash::make($request->password );
         User::where('id', '=', $userId)->update(['password' => $resetPW]);
 
-//        $this->logout($request);
-//message": "Session store not set on request.",
-//    "exception": "RuntimeException",
-//    "file": "/usr/local/var/wwwa/gcp/balancedDiet/vendor/laravel/framework/src/Illuminate/Http/Request.php",
-//    "line": 483,
         User::where('id', '=', $userId)->update(['token_expire_time' => Null]);
 
-//        $user = $request->user();
-//        $user->remember_token = Null;
-//        $user->token_expire_time = Null;
-//        $user->save();
+
 
         return response()->json(['message' => "reset success , please login "], 200);
 
