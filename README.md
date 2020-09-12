@@ -31,12 +31,12 @@ part 2. etic
 - [x]  gcp deploy
 
 part 3. Restful API bioProfile
-- [ ] create
-- [ ] read 
-- [ ] read by bioProfile id 
-- [ ] read by user id  
-- [ ] update
-- [ ] delete
+- [x] create
+- [x] read 
+- [X] read by bioProfile id 
+- [X] read by user id  
+- [X] update
+- [x] delete
 
 
 part 4. Restful API water  
@@ -47,7 +47,10 @@ part 4. Restful API water
 - [ ] delete
 
 *Restful API : diet*
-- [ ] create
+- [ ] create by diet type 
+       
+       - type 0 daily
+       - type 1 doctor/standard
 - [ ] read by diet type
 - [ ] read detail by user id 
 - [ ] read detail by user id  with water summary And  filter someday
