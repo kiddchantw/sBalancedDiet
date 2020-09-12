@@ -6,6 +6,7 @@ use App\User;
 use App\userWater;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
 
 class UserWaterController extends Controller
 {
@@ -38,7 +39,6 @@ class UserWaterController extends Controller
      */
     public function store(Request $request)
     {
-//
 //        $newRecord = userWater::create(
 //            ['user_id' => $request->user_id],
 //            ['water' => $request->water]
@@ -70,6 +70,22 @@ class UserWaterController extends Controller
 
     public function showOneDay(Request $request)
     {
+        try {
+            $rules = [
+                "user_id" => "required",
+                "day" => "date_format:Y-m-d"
+            ];
+            $message = [
+                "user_id" => "請確認使用者",
+                "day.date_format" => "請確認日期格式",
+            ];
+            $validResult = $request->validate($rules, $message);
+        } catch (ValidationException $exception) {
+            $errorMessage = $exception->validator->errors()->first();
+            return response()->json(['success' => false, 'message' =>$errorMessage , 'data'=> null ],400);
+        }
+
+
         $data = userWater::select([
             DB::raw('sum(water) as sum'),
             DB::raw('DATE(created_at) as day')
