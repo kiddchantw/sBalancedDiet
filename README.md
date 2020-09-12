@@ -13,29 +13,48 @@
 
 ## 實作
 
+
+
+part 1.會員 API
 - [x]  api: 註冊
-
 - [x]  api: 登入
-
 - [x]  api: 關於我
-
 - [x]  api: 登出
+- [x]  忘記密碼
+- [x]  修改密碼
+- [ ]  修改name
+- [ ]  delete user
 
+part 2. etic
 - [x]  middleware: 確認 token 有無失效
-
 - [x]  middleware: 紀錄 api
- 
 - [x]  gcp deploy
- 
-- [ ]  Restful API : bio (only 體重)
- 
-- [x]  api: 忘記密碼
 
-- [x]  api: 修改密碼
+part 3. Restful API bioProfile
+- [ ] create
+- [ ] read 
+- [ ] read by bioProfile id 
+- [ ] read by user id  
+- [ ] update
+- [ ] delete
 
-- [ ]  api: 修改name
 
+part 4. Restful API water  
+- [x] create
+- [x] read summary
+- [x] read summary by user id  or filter someday
+- [ ] update
+- [ ] delete
 
+*Restful API : diet*
+- [ ] create
+- [ ] read by diet type
+- [ ] read detail by user id 
+- [ ] read detail by user id  with water summary And  filter someday
+- [ ] show
+- [ ] update
+- [ ] delete
+- [ ] compare one day real life with standard
 
 
 

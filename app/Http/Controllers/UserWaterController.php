@@ -44,9 +44,10 @@ class UserWaterController extends Controller
 //            ['water' => $request->water]
 //        );
 
-        $newRecord = userWater::create(
-            ['user_id' => $request->user_id, 'water' => $request->water]
-        );
+        $newRecord = userWater::create([
+                'user_id' => $request->user_id,
+                'water' => $request->water
+            ]);
 
         if ($newRecord) {
             return response()->json(['success' => true, 'message' => "add success", 'data' => null], 200);
@@ -69,20 +70,17 @@ class UserWaterController extends Controller
 
     public function showOneDay(Request $request)
     {
-
-
         $data = userWater::select([
-            // This aggregates the data and makes available a 'count' attribute
-            DB::raw('sum(water) as `sum`'),
-            // This throws away the timestamp portion of the date
+            DB::raw('sum(water) as sum'),
             DB::raw('DATE(created_at) as day')
-            // Group these records according to that day
         ])->groupBy('day')
-            // And restrict these results to only those created in the last week
-            ->where('user_id', '=', $request->user_id)
-            ->first();  //最新的
-//            ->get(); //所有的
+            ->where('user_id', '=', $request->user_id )
+            ->get();
 
+        if (isset($request->day)){
+            //如果有輸入日期，就只提供該日的
+            $data = $data->where('day','=',$request->day)->first();
+        }
         return response()->json(['success' => true, 'message' => "", 'data' => $data ], 200);
     }
 
