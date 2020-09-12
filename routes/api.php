@@ -57,3 +57,8 @@ Route::middleware(['checkToken'])->group(function () {
 
 Route::apiResource('bioProfile', 'BioProfileController');
 Route::get('userBio/{id}', 'BioProfileController@showByUser');
+
+
+Route::apiResource('userWater', 'UserWaterController');
+Route::post('waterOneDay', 'UserWaterController@showOneDay');
+
