@@ -115,16 +115,24 @@ class UserWaterController extends Controller
             ->where('user_id', '=', $request->user_id )
             ->get();
 
-        if (isset($request->day)){
+
+
+        $startDate =  $request->start_date;
+        $endDate =  $request->end_date;
+
+
+        if (isset($startDate) & isset($endDate)){
             //如果有輸入日期，就只提供該日的
             try {
                 $rules = [
                     "user_id" => "required",
-                    "day" => "date_format:Y-m-d"
+                    "start_date" => "date_format:Y-m-d",
+                    "end_date" => "date_format:Y-m-d"
                 ];
                 $message = [
                     "user_id" => "請確認使用者",
-                    "day.date_format" => "請確認日期格式",
+                    "start_date.date_format" => "請確認日期格式",
+                    "end_date.date_format" => "請確認日期格式",
                 ];
                 $request->validate($rules, $message);
             } catch (ValidationException $exception) {
@@ -132,8 +140,10 @@ class UserWaterController extends Controller
                 return response()->json(['success' => false, 'message' =>$errorMessage , 'data'=> null ],400);
             }
 
+//單一日ok
+//            $data = $data->where('day','=',$request->day);
+            $data = $data->whereBetween('day', [ $startDate, $endDate ] );
 
-            $data = $data->where('day','=',$request->day)->first();
         }
         return response()->json(['success' => true, 'message' => "", 'data' => $data ], 200);
     }
