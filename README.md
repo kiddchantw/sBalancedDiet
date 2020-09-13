@@ -43,16 +43,18 @@ part 4. Restful API water
 - [x] create
 - [x] read summary
 - [x] read summary by user id  or filter someday
-- [ ] update
-- [ ] delete
+- [x] update
+- [x] delete
 
 *Restful API : diet*
-- [ ] create by diet type 
+- [x] create by diet type 
        
        - type 0 daily
        - type 1 doctor/standard
-- [ ] read by diet type
+- [x] read by kind/standard
 - [ ] read detail by user id 
+    - 單日多餐 one object
+    - 多日 object 
 - [ ] read detail by user id  with water summary And  filter someday
 - [ ] show
 - [ ] update

@@ -89,7 +89,7 @@ class UserWaterController extends Controller
     public function show(userWater $userWater)
     {
         //
-        dd($userWater);
+        return response()->json(['success' => true , 'message' =>"" , 'data'=>$userWater ],200);
     }
 
 
@@ -140,8 +140,9 @@ class UserWaterController extends Controller
                 return response()->json(['success' => false, 'message' =>$errorMessage , 'data'=> null ],400);
             }
 
-//單一日ok
+//單日查詢ok
 //            $data = $data->where('day','=',$request->day);
+            //多日查詢ok
             $data = $data->whereBetween('day', [ $startDate, $endDate ] );
 
         }
