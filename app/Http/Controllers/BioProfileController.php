@@ -13,43 +13,11 @@ class BioProfileController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
 
-//    public function customResponse()
-//    (Request $request, array $rulesInput)
-//    {
-//        try {
-//            $this->validate($request, $rulesInput, $this->messageValidate);
-//        } catch (ValidationException $exception) {
-////            $errorMessage = $exception->validator->errors()->first();
-//            $errorMessage = $exception->validator->getMessageBag();
-//
-//            return $errorMessage;
-//        }
-//        $response = array(
-//            "remember_token" => $userL->remember_token,
-//            "token_expire_time" => $userL->token_expire_time,
-//            "user_id" => $userL->id
-//        );
-//
-//    } else {
-//$response = "login error";
-//}
-//
-//return response()->json(['message' => $response], 200);
-
-//        return response()->json([ 'status' => "true" , 'message' => "123" , 'data' => bioProfile::all()], 200);
-
-//    }
 
 
     public function index()
     {
-        //
-//        return response()->json(['message' => bioProfile::all()], 200);
-//        return response()->json(['name' => 'Abigail', 'state' => 123,'data'=>bioProfile::all()],202);
         return response()->json(['success' => true , 'message' => "" , 'data'=>bioProfile::all()],200);
-//        return response()->json(['success' => false, 'message' =>"reasonABC" , 'data'=> null ],400);
-
-//        $this->customResponse();
     }
 
 
@@ -73,8 +41,7 @@ class BioProfileController extends Controller
      */
     public function store(Request $request)
     {
-        //
-//        $userWeight =  $request->weight;
+
         $userWeight = (isset($request->weight)) ? $request->weight: 0;
         $userSystolic = (isset($request->systolic)) ? $request->systolic: 0;
         $userDiastolic =  (isset($request->diastolic)) ? $request->diastolic: 0;
@@ -113,15 +80,6 @@ class BioProfileController extends Controller
     public function show(bioProfile $bioProfile)
     {
         return response()->json(['success' => true , 'message' =>"" , 'data'=>$bioProfile ],200);
-
-//        dd($id);
-        //        $updateTaskId = $bioProfile->id;
-//        $updateTask = Tasks::where('id', '=', $updateTaskId);
-//        return response()->json(['message' => $bioProfile], 200);
-//        if ($bioProfile->exists()){
-//        }else{
-//        }
-
     }
 
     public function showByUser($id)
@@ -193,7 +151,6 @@ class BioProfileController extends Controller
     {
         $bioProfile->delete();
         return response()->json(['success' => true , 'message' =>"delete success" , 'data'=>null ],200);
-
     }
 
 }

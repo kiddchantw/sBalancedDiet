@@ -60,5 +60,7 @@ Route::get('userBio/{id}', 'BioProfileController@showByUser');
 
 
 Route::apiResource('userWater', 'UserWaterController');
-Route::post('waterOneDay', 'UserWaterController@showOneDay');
+Route::get('water/{id}', 'UserWaterController@waterUser');
+Route::post('water/sum', 'UserWaterController@waterDay');
+
 

@@ -81,7 +81,6 @@ class LoginController extends Controller
         if ($validResult != Null) {
 //            return response()->json(['message' => $validResult], 400);
             return response()->json(['success' => false, 'message' =>$validResult , 'data'=> null ],400);
-
         }
 
 
