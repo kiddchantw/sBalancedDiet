@@ -65,5 +65,7 @@ Route::post('water/sum', 'UserWaterController@waterDay');
 
 
 Route::apiResource('userDiet', 'UserDietController');
-Route::post('diet/standard', 'UserDietController@showStandard');
+Route::post('diet', 'UserDietController@showDiet');
+Route::post('diet/day', 'UserDietController@showDietByDay');
+
 

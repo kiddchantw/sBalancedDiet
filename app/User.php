@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -47,6 +48,9 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'created_at'  => 'date:Y-m-d H:i:s',
+        'updated_at'  => 'date:Y-m-d H:i:s',
+        'deleted_at'  => 'date:Y-m-d H:i:s',
     ];
 
     public function setPasswordAttribute($password)
@@ -54,6 +58,23 @@ class User extends Authenticatable
         if ($password !== null & $password !== "") {
             $this->attributes['password'] = Hash::make($password);
         }
+    }
+
+    public function getCreatedAtAttribute($value)
+    {
+        return Carbon::createFromTimestamp(strtotime($value))
+            ->timezone('Asia/Taipei')
+            ->toDateTimeString()
+            ;
+    }
+
+
+    public function getUpdatedAtAttribute($value)
+    {
+        return Carbon::createFromTimestamp(strtotime($value))
+            ->timezone('Asia/Taipei')
+            ->toDateTimeString()
+            ;
     }
 
 }
