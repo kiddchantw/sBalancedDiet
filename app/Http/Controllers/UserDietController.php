@@ -66,31 +66,11 @@ class UserDietController extends Controller
 
     public function showDiet(Request $request)
     {
-        return userDiet::find(5);
         //show user standard diet
         $userId = $request->user_id;
         $standardKind = $request->kind;
         $startDate = $request->start_date;
         $endDate = $request->end_date;
-//        $startDate = Carbon::createFromFormat('Y-m-d', $request->start_date)->timestamp ;
-//        $endDate = Carbon::createFromFormat('Y-m-d', $request->end_date)->timestamp ;
-//        $startDate = Carbon::parse('2020-09-13')->timestamp;
-//        $endDate = Carbon::parse('2020-09-14')->timestamp;
-//
-//        $startDate =  strtotime('2020-09-13');
-//        $endDate =  strtotime('2020-09-14') ;
-
-//        dd(Carbon::now());
-
-//        $format = Carbon::parse('2020-09-13')->format('Y-m-d 00:00:00');
-//        dd($format);
-//        $startDate = (Carbon::createFromFormat('Y-m-d 00:00:00', '2020-09-13'));
-//        $endDate = (Carbon::createFromFormat('Y-m-d 23:59:59', '2020-09-14'));
-
-//
-//        $startDate =  Carbon::parse('2020-09-12')->format('Y-m-d 00:00:00');
-//        $endDate =  Carbon::parse('2020-09-12')->format('Y-m-d 23:59:59');
-
 
         if ($standardKind != 0) {
             $data = userDiet::select(
@@ -112,32 +92,15 @@ class UserDietController extends Controller
 
             $data = userDiet::query()
                 ->where([['user_id', '=', $userId], ['kind', '=', $standardKind]])
-//                ->whereBetween('updated_at', [$startDate, $endDate])
                 ->orderBy('updated_at', 'asc')
                 ->when($startDate, function ($query, $s) {
                     return $query->where('updated_at', '>=', $s);
                 })
                 ->when($endDate, function ($query, $e) {
                     return $query->where('updated_at', '<=', $e);
-                })->get();
-//            ;
-//            dd($data->toSql(), $data->getBindings());
+                })
+                ->get();
 
-//            if (isset($startDate) & isset($endDate)) {
-//                $data = $data->where('created_at', '=',$startDate);
-
-//                $data = $data->where('created_at', '=',Carbon::now());
-//                $data = $data->where('updated_at', '>',$startDate)->where('updated_at', '<=',$endDate);
-//                $data = $data->whereBetween('updated_at', [$startDate, $endDate]);
-
-
-//                $data = $data->where('updated_at', '<', $endDate);
-
-
-//                $data = $data->where('created_at', '>=',Carbon::createFromFormat('Y-m-d H:i:s', '2020-09-14 00:00'));
-            // Carbon::now()->startOfWeek()
-//            }
-            //dd($data);
         }
 
         return response()->json(['success' => true, 'message' => "", 'data' => $data], 200);
@@ -188,6 +151,43 @@ class UserDietController extends Controller
     public function update(Request $request, userDiet $userDiet)
     {
         //
+
+        $arrayColumn = ['fruits','vegetables','grains','nuts','proteins','dairy'];
+        foreach ( $arrayColumn as $value)
+        {
+                if ($request->filled($value)){
+//                    echo $value." : ".$request->$value;
+//                    echo "<br>";
+                    $userDiet->$value = $request->$value;
+                }
+                $userDiet->save();
+        }
+        if ($userDiet == true) {
+            return response()->json(['success' => true , 'message' =>"update success" , 'data'=>null ],200);
+        } else {
+            return response()->json(['success' => false, 'message' =>"update  error" , 'data'=> null ],400);
+        }
+
+
+
+//        $updateF = $request->fruits;
+//        $updateV = $request->vegetables;
+//        $updateG = $request->grains;
+//        $updateN = $request->nuts;
+//        $updateP = $request->proteins;
+//        $updateD = $request->dairy;
+//
+//        if (isset($updateF) ) {
+//            $userDiet->fruits =  $updateF ;
+//        }
+//        if (isset($updateV) ) {
+//            $userDiet->vegetables =  $updateV ;
+//        }
+
+//        $userDiet->save();
+
+
+
     }
 
     /**
@@ -199,5 +199,7 @@ class UserDietController extends Controller
     public function destroy(userDiet $userDiet)
     {
         //
+        $userDiet->delete();
+        return response()->json(['success' => true , 'message' =>"delete success" , 'data'=>null ],200);
     }
 }

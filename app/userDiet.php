@@ -47,7 +47,7 @@ class userDiet extends Model
     ///
 
 
-    
+
 
     protected $casts = [
         'created_at'  => 'date:Y-m-d H:i:s',

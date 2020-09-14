@@ -4,11 +4,7 @@
     <list default="true" id="4d21c94e-af77-4809-a87f-8e982a1bac65" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/UserDietController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/UserDietController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/bioProfile.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/bioProfile.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/userDiet.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/userDiet.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/userWater.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/userWater.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -170,7 +166,7 @@
       <workItem from="1599327839129" duration="1670000" />
       <workItem from="1599399754451" duration="5329000" />
       <workItem from="1599494724560" duration="249000" />
-      <workItem from="1599535204577" duration="83646000" />
+      <workItem from="1599535204577" duration="86914000" />
     </task>
     <servers />
   </component>
