@@ -111,7 +111,28 @@ class UserDietController extends Controller
 
     public function showDietByDay(Request $request)
     {
-        $data = userDiet::select([
+        $dateS = $request->day;
+        $userId = $request->user_id;
+
+        $data = userDiet::where([['user_id', '=', $userId], ['kind', '=', 1]])->get();
+
+        $arr1 = array();
+        foreach ( $data as  $userDiet)
+         {
+             $arr1 = array(
+                 $userDiet->fruits,
+                 $userDiet->vegetables,
+                 $userDiet->grains,
+                 $userDiet->nuts,
+                 $userDiet->proteins,
+                 $userDiet->dairy
+             );
+         }
+        var_dump($arr1);
+        echo "<br>";
+//         return $arr1;
+
+        $dataOneDay = userDiet::select([
             DB::raw('DATE(updated_at) as day'),
             DB::raw('sum(fruits) as A'),
             DB::raw('sum(vegetables) as B'),
@@ -119,13 +140,62 @@ class UserDietController extends Controller
             DB::raw('sum(nuts) as d'),
             DB::raw('sum(proteins) as e'),
             DB::raw('sum(dairy) as f'),
-
         ])->groupBy('day')
             ->where('user_id', '=', $request->user_id)
-            ->whereNotIn('kind', [1])
-            ->get();
+            ->where('kind', '=',0)
+//            ->whereNotIn('kind', [1])
+//            ->get()
+            ->get()
+            ->where('day', '=',$dateS )
+        ;
 
-        return response()->json(['success' => true, 'message' => "", 'data' => $data], 200);
+        $arr2 = array();
+        foreach ( $dataOneDay as  $userDiet)
+        {
+            $arr2 = array(
+                $userDiet->A,
+                $userDiet->B,
+                $userDiet->c,
+                $userDiet->d,
+                $userDiet->e,
+                $userDiet->f
+            );
+        }
+        var_dump($arr2);
+        echo "<br>";
+
+
+//        $result = array();
+        $arrayColumn = ['fruits','vegetables','grains','nuts','proteins','dairy'];
+        $response = array();
+        if (count($arr1) == count($arr2)) {
+            for($i = 0; $i < count($arr1); $i++) {
+                //$result[] = $arr1[$i] - $arr2[$i];
+//                $response[$arrayColumn[$i]] = $result[$i];
+                $response[$arrayColumn[$i]] = $arr1[$i] - $arr2[$i];
+            }
+        }
+//        var_dump($result);
+
+
+//        if (count($result) == count($arrayColumn)) {
+//            for($i = 0; $i < count($arr1); $i++) {
+//            }
+//        }
+
+        var_dump( $response );
+
+//            array(
+//            "remember_token" => $userL->remember_token,
+//            "token_expire_time" => $userL->token_expire_time,
+//            "user_id" => $userL->id
+//        );
+
+
+
+//        $dataSum = $dataSum->where('day', '=',$dateS );
+
+//        return response()->json(['success' => true, 'message' => "", 'data' => $dataSum], 200);
 
     }
 
