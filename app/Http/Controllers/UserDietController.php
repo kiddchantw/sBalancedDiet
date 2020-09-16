@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\DB;
 
 class UserDietController extends Controller
 {
+    public static $dietColumn = ['fruits', 'vegetables', 'grains', 'nuts', 'proteins', 'dairy'];
+
+
     /**
      * Display a listing of the resource.
      *
@@ -111,26 +114,28 @@ class UserDietController extends Controller
 
     public function showDietByDay(Request $request)
     {
-        $dateS = $request->day;
         $userId = $request->user_id;
 
         $data = userDiet::where([['user_id', '=', $userId], ['kind', '=', 1]])->get();
 
         $arr1 = array();
-        foreach ( $data as  $userDiet)
-         {
-             $arr1 = array(
-                 $userDiet->fruits,
-                 $userDiet->vegetables,
-                 $userDiet->grains,
-                 $userDiet->nuts,
-                 $userDiet->proteins,
-                 $userDiet->dairy
-             );
-         }
-        var_dump($arr1);
-        echo "<br>";
+        foreach ($data as $userDiet) {
+            $arr1 = array(
+                $userDiet->fruits,
+                $userDiet->vegetables,
+                $userDiet->grains,
+                $userDiet->nuts,
+                $userDiet->proteins,
+                $userDiet->dairy
+            );
+        }
+//        var_dump($arr1);
 //         return $arr1;
+
+
+        $dateS = $request->start_date;
+        $dateE = $request->end_date;
+
 
         $dataOneDay = userDiet::select([
             DB::raw('DATE(updated_at) as day'),
@@ -142,60 +147,49 @@ class UserDietController extends Controller
             DB::raw('sum(dairy) as f'),
         ])->groupBy('day')
             ->where('user_id', '=', $request->user_id)
-            ->where('kind', '=',0)
-//            ->whereNotIn('kind', [1])
-//            ->get()
+            ->where('kind', '=', 0)
             ->get()
-            ->where('day', '=',$dateS )
-        ;
+//            ->where('day', '=',$dateS )
+            ->whereBetween('day', [$dateS, $dateE]);
 
-        $arr2 = array();
-        foreach ( $dataOneDay as  $userDiet)
-        {
-            $arr2 = array(
-                $userDiet->A,
-                $userDiet->B,
-                $userDiet->c,
-                $userDiet->d,
-                $userDiet->e,
-                $userDiet->f
-            );
-        }
-        var_dump($arr2);
-        echo "<br>";
+        $dayCount = $dataOneDay->count();
 
-
-//        $result = array();
-        $arrayColumn = ['fruits','vegetables','grains','nuts','proteins','dairy'];
-        $response = array();
-        if (count($arr1) == count($arr2)) {
-            for($i = 0; $i < count($arr1); $i++) {
-                //$result[] = $arr1[$i] - $arr2[$i];
-//                $response[$arrayColumn[$i]] = $result[$i];
-                $response[$arrayColumn[$i]] = $arr1[$i] - $arr2[$i];
+        $result = array();
+        for ($j = 0; $j < $dayCount; $j++) {
+            $cQuery = $dataOneDay->get($j);
+            $loopDay = "";
+            foreach ($cQuery as $userDiet) {
+                $loopDay = $cQuery->day;
+                $arrDay = array(
+                    $cQuery->A,
+                    $cQuery->B,
+                    $cQuery->c,
+                    $cQuery->d,
+                    $cQuery->e,
+                    $cQuery->f
+                );
             }
+
+            $responseloop = array();
+            $responseloop['date'] = $loopDay;
+//
+            $response = array();
+            if (count($arr1) == count($arrDay)) {
+                for ($i = 0; $i < count($arr1); $i++) {
+                    $response[self::$dietColumn[$i]] = round(($arr1[$i] - $arrDay[$i]), 1);
+                }
+            }
+            $responseloop['deficiency'] = $response;
+            array_push($result, $responseloop);
+
+
         }
-//        var_dump($result);
 
 
-//        if (count($result) == count($arrayColumn)) {
-//            for($i = 0; $i < count($arr1); $i++) {
-//            }
-//        }
-
-        var_dump( $response );
-
-//            array(
-//            "remember_token" => $userL->remember_token,
-//            "token_expire_time" => $userL->token_expire_time,
-//            "user_id" => $userL->id
-//        );
+//        var_dump( $response );
 
 
-
-//        $dataSum = $dataSum->where('day', '=',$dateS );
-
-//        return response()->json(['success' => true, 'message' => "", 'data' => $dataSum], 200);
+        return response()->json(['success' => true, 'message' => "", 'data' => $result], 200);
 
     }
 
@@ -220,42 +214,21 @@ class UserDietController extends Controller
      */
     public function update(Request $request, userDiet $userDiet)
     {
-        //
+        //TODO:要設計非當日時間不可修改
 
-        $arrayColumn = ['fruits','vegetables','grains','nuts','proteins','dairy'];
-        foreach ( $arrayColumn as $value)
-        {
-                if ($request->filled($value)){
+        foreach (self::$dietColumn as $value) {
+            if ($request->filled($value)) {
 //                    echo $value." : ".$request->$value;
 //                    echo "<br>";
-                    $userDiet->$value = $request->$value;
-                }
-                $userDiet->save();
+                $userDiet->$value = $request->$value;
+            }
+            $userDiet->save();
         }
         if ($userDiet == true) {
-            return response()->json(['success' => true , 'message' =>"update success" , 'data'=>null ],200);
+            return response()->json(['success' => true, 'message' => "update success", 'data' => null], 200);
         } else {
-            return response()->json(['success' => false, 'message' =>"update  error" , 'data'=> null ],400);
+            return response()->json(['success' => false, 'message' => "update  error", 'data' => null], 400);
         }
-
-
-
-//        $updateF = $request->fruits;
-//        $updateV = $request->vegetables;
-//        $updateG = $request->grains;
-//        $updateN = $request->nuts;
-//        $updateP = $request->proteins;
-//        $updateD = $request->dairy;
-//
-//        if (isset($updateF) ) {
-//            $userDiet->fruits =  $updateF ;
-//        }
-//        if (isset($updateV) ) {
-//            $userDiet->vegetables =  $updateV ;
-//        }
-
-//        $userDiet->save();
-
 
 
     }
@@ -270,6 +243,6 @@ class UserDietController extends Controller
     {
         //
         $userDiet->delete();
-        return response()->json(['success' => true , 'message' =>"delete success" , 'data'=>null ],200);
+        return response()->json(['success' => true, 'message' => "delete success", 'data' => null], 200);
     }
 }
