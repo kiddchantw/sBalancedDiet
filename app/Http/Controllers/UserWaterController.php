@@ -143,7 +143,8 @@ class UserWaterController extends Controller
 //單日查詢ok
 //            $data = $data->where('day','=',$request->day);
             //多日查詢ok
-            $data = $data->whereBetween('day', [ $startDate, $endDate ] );
+//            return $data->forget(1);
+            $data = $data->whereBetween('day', [ $startDate, $endDate ])->values();
 
         }
         return response()->json(['success' => true, 'message' => "", 'data' => $data ], 200);

@@ -116,10 +116,10 @@ class UserDietController extends Controller
     {
         $userId = $request->user_id;
 
-        $data = userDiet::where([['user_id', '=', $userId], ['kind', '=', 1]])->get();
+        $dataS = userDiet::where([['user_id', '=', $userId], ['kind', '=', 1]])->get();
 
         $arr1 = array();
-        foreach ($data as $userDiet) {
+        foreach ($dataS as $userDiet) {
             $arr1 = array(
                 $userDiet->fruits,
                 $userDiet->vegetables,
@@ -129,13 +129,10 @@ class UserDietController extends Controller
                 $userDiet->dairy
             );
         }
-//        var_dump($arr1);
-//         return $arr1;
 
 
         $dateS = $request->start_date;
         $dateE = $request->end_date;
-
 
         $dataOneDay = userDiet::select([
             DB::raw('DATE(updated_at) as day'),
@@ -157,6 +154,7 @@ class UserDietController extends Controller
         $result = array();
         for ($j = 0; $j < $dayCount; $j++) {
             $cQuery = $dataOneDay->get($j);
+            var_dump($cQuery);
             $loopDay = "";
             foreach ($cQuery as $userDiet) {
                 $loopDay = $cQuery->day;
