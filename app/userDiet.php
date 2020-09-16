@@ -22,7 +22,7 @@ class userDiet extends Model
         'fruits','vegetables','grains','nuts','proteins','dairy'
     ];
 
-    protected $hidden = ['deleted_at'];
+    protected $hidden = ['deleted_at','created_at'];
 
 
 

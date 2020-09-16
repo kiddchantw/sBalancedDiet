@@ -6,6 +6,7 @@ use App\userDiet;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
 
 class UserDietController extends Controller
 {
@@ -39,9 +40,57 @@ class UserDietController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
+
+    public $messageValidate = [
+        "user_id.required" => "請確認使用者",
+        "user_id.exist" => "請確認使用者帳號",
+        "kind.required" => "請確認紀錄種類",
+        "diet_type.required" => "請確認用餐種類",
+
+        "fruits.numeric"=> "請輸入水果數量",
+        "vegetables.numeric"=> "請輸入蔬菜數量",
+        "grains.numeric"=> "請輸入全穀雜糧類數量",
+        "nuts.numeric"=> "請輸入堅果油脂數量",
+        "proteins.numeric"=> "請輸入豆魚蛋肉類數量",
+        "dairy.numeric"=> "請輸入乳製品數量",
+
+
+        "start_date.date_format" => "請確認日期格式",
+        "end_date.date_format" => "請確認日期格式",
+
+    ];
+
+
+    public function customValidate(Request $request, array $rulesInput)
+    {
+        try {
+            $this->validate($request, $rulesInput, $this->messageValidate);
+        } catch (ValidationException $exception) {
+            $errorMessage = $exception->validator->errors()->first();
+//            $errorMessage = $exception->validator->getMessageBag();
+            return $errorMessage;
+        }
+    }
+
     public function store(Request $request)
     {
 
+        $rules = [
+            "user_id" => "required ",
+            "kind" => "required",
+            "diet_type" => "required",
+            "fruits" => "numeric",
+            "vegetables" => "numeric",
+            "grains" => "numeric",
+            "nuts" => "numeric",
+            "dairy" => "numeric",
+        ];
+        $validResult = $this->customValidate($request, $rules);
+        if ($validResult != Null) {
+            return response()->json(['success' => false, 'message' =>$validResult , 'data'=> null ],400);
+        }
+
+        //todo:create or update有沒有更好的寫法
         $newRecord = userDiet::create($request->all());
         if ($newRecord) {
             return response()->json(['success' => true, 'message' => "add success", 'data' => null], 200);
@@ -49,8 +98,6 @@ class UserDietController extends Controller
             return response()->json(['success' => false, 'message' => "add error", 'data' => null], 400);
         }
 
-        //todo:create or update有沒有更好的寫法
-        //todo:validate
 
     }
 
@@ -69,7 +116,20 @@ class UserDietController extends Controller
 
     public function showDiet(Request $request)
     {
-        //show user standard diet
+
+        $rules = [
+            "user_id" => "required ",
+            "kind" => "required",
+            "start_date" => "nullable | date_format:Y-m-d",
+            "end_date" => "nullable | date_format:Y-m-d"
+        ];
+        $validResult = $this->customValidate($request, $rules);
+        if ($validResult != Null) {
+            return response()->json(['success' => false, 'message' =>$validResult , 'data'=> null ],400);
+        }
+
+
+
         $userId = $request->user_id;
         $standardKind = $request->kind;
         $startDate = $request->start_date;
@@ -114,12 +174,28 @@ class UserDietController extends Controller
 
     public function showDietByDay(Request $request)
     {
-        $userId = $request->user_id;
+        $rules = [
+            "user_id" => "required ",
+            "start_date" => "nullable | date_format:Y-m-d",
+            "end_date" => "nullable |  date_format:Y-m-d"
+        ];
+        $validResult = $this->customValidate($request, $rules);
+        if ($validResult != Null) {
+            return response()->json(['success' => false, 'message' =>$validResult , 'data'=> null ],400);
+        }
 
-        $dataS = userDiet::where([['user_id', '=', $userId], ['kind', '=', 1]])->get();
+
+        $userId = $request->user_id;
+//
+        $dataUserStandard = userDiet::where([['user_id', '=',$userId], ['kind', '=', 1]])->get();
+//        dd();
+        if ($dataUserStandard->count() == 0)
+        {
+            return response()->json(['success' => false, 'message' =>"user diet standard error" , 'data'=> null ],400);
+        }
 
         $arr1 = array();
-        foreach ($dataS as $userDiet) {
+        foreach ($dataUserStandard as $userDiet) {
             $arr1 = array(
                 $userDiet->fruits,
                 $userDiet->vegetables,
@@ -147,14 +223,12 @@ class UserDietController extends Controller
             ->where('kind', '=', 0)
             ->get()
 //            ->where('day', '=',$dateS )
-            ->whereBetween('day', [$dateS, $dateE]);
+            ->whereBetween('day', [$dateS, $dateE])->values();
 
         $dayCount = $dataOneDay->count();
-
         $result = array();
         for ($j = 0; $j < $dayCount; $j++) {
             $cQuery = $dataOneDay->get($j);
-            var_dump($cQuery);
             $loopDay = "";
             foreach ($cQuery as $userDiet) {
                 $loopDay = $cQuery->day;
@@ -183,10 +257,6 @@ class UserDietController extends Controller
 
         }
 
-
-//        var_dump( $response );
-
-
         return response()->json(['success' => true, 'message' => "", 'data' => $result], 200);
 
     }
@@ -213,11 +283,10 @@ class UserDietController extends Controller
     public function update(Request $request, userDiet $userDiet)
     {
         //TODO:要設計非當日時間不可修改
+        // if nowtime day > userDiet->updated_at
 
         foreach (self::$dietColumn as $value) {
             if ($request->filled($value)) {
-//                    echo $value." : ".$request->$value;
-//                    echo "<br>";
                 $userDiet->$value = $request->$value;
             }
             $userDiet->save();
