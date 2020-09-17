@@ -47,17 +47,6 @@ class LoginController extends Controller
     }
 
 
-    public $messageValidate = [
-        "password.required" => "請輸入password",
-        "password.regex" => "請確認password符合 A-Za-z0-9 ",
-        "password.between" => "password 字數需6~12",
-        "email.required" => "請輸入email",
-        "email.email" => "請確認格式",
-        "name.required" => "請輸入name",
-        "name.unique" => "name exist",
-    ];
-
-
     public function customValidate(Request $request, array $rulesInput)
     {
         try {
@@ -80,7 +69,7 @@ class LoginController extends Controller
         $validResult = $this->customValidate($request, $rules);
         if ($validResult != Null) {
 //            return response()->json(['message' => $validResult], 400);
-            return response()->json(['success' => false, 'message' =>$validResult , 'data'=> null ],400);
+            return response()->json(['success' => false, 'message' => $validResult, 'data' => null], 400);
         }
 
 
@@ -100,12 +89,12 @@ class LoginController extends Controller
                 "token_expire_time" => $userL->token_expire_time,
                 "user_id" => $userL->id
             );
-            return response()->json(['success' => true , 'message' =>"" , 'data'=>$response ],200);
+            return response()->json(['success' => true, 'message' => "", 'data' => $response], 200);
 
 
         } else {
             $response = "login error";
-            return response()->json(['success' => false, 'message' =>$response , 'data'=> null ],400);
+            return response()->json(['success' => false, 'message' => $response, 'data' => null], 400);
 
         }
 
@@ -132,10 +121,9 @@ class LoginController extends Controller
         $user->remember_token = Null;
         $user->token_expire_time = Null;
         $user->save();
-        return response()->json(['success' => true , 'message' =>"logout success!" , 'data'=>null ],200);
+        return response()->json(['success' => true, 'message' => "logout success!", 'data' => null], 200);
 //        return response()->json(['message' => "logout success!"], 200);
     }
-
 
 
     //API_5
@@ -152,41 +140,67 @@ class LoginController extends Controller
 
         $response = array('url' => $photoURL);
 //        return response()->json(['message' => $response], 200);
-        return response()->json(['success' => true , 'message' =>"upload success" , 'data'=>$response ],200);
+        return response()->json(['success' => true, 'message' => "upload success", 'data' => $response], 200);
 
     }
 
 
+    public $messageValidate = [
+        "password.required" => "請輸入password",
+        "password.regex" => "請確認password符合 A-Za-z0-9 ",
+        "password.between" => "password 字數需6~12",
+        "email.required" => "請輸入email",
+        "email.email" => "請確認格式",
+        "email.exists" => "請確認email",
+        "name.required" => "請輸入name",
+        "name.unique" => "name exist",
+    ];
+
     //API_6 reset
-    public function resetPasswordAPI (Request $request)
+    public function resetPasswordAPI(Request $request)
     {
         $rules6 = [
+//            "email" => "nullable| email | unique:users,email",
             "password" => "required|string | between:6,12 | regex:/^[A-Za-z0-9]+$/"
         ];
         $validResult = $this->customValidate($request, $rules6);
         if ($validResult != Null) {
-//            return response()->json(['message' => $validResult], 400);
-            return response()->json(['success' => false, 'message' =>$validResult , 'data'=> null ],400);
-
+            return response()->json(['success' => false, 'message' => $validResult, 'data' => null], 400);
         }
+
 
         $userId = $request->user()->id;
 //        dd($request->user());
 //        $userId = $request->id;
 
-        $resetPW = Hash::make($request->password );
+        $resetPW = Hash::make($request->password);
         User::where('id', '=', $userId)->update(['password' => $resetPW]);
 
         User::where('id', '=', $userId)->update(['token_expire_time' => Null]);
 
-
-
-//        return response()->json(['message' => "reset success , please login "], 200);
-        return response()->json(['success' => true , 'message' =>"reset success" , 'data'=>null ],200);
-
-
+        return response()->json(['success' => true, 'message' => "reset password success", 'data' => null], 200);
 
     }
 
+
+    //API_07_forgetPassword
+    public function forgetPasswordAPI(Request $request)
+    {
+        $rules6 = [
+           "email" => "required| email | exists:users",
+            "password" => "required|string | between:6,12 | regex:/^[A-Za-z0-9]+$/"
+        ];
+        $validResult = $this->customValidate($request, $rules6);
+        if ($validResult != Null) {
+            return response()->json(['success' => false, 'message' => $validResult, 'data' => null], 400);
+        }
+
+        $resetPW = Hash::make($request->password);
+        User::where('email', '=', $request->email)
+            ->update(['password' => $resetPW],['token_expire_time' => Null]);
+
+        return response()->json(['success' => true, 'message' => "new password is ready, please login again", 'data' => null], 200);
+
+    }
 
 }

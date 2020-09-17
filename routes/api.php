@@ -31,8 +31,11 @@ Route::middleware(['checkToken'])->group(function () {
     Route::post('uploadImageAPI', 'Auth\LoginController@uploadImageAPI');
     Route::post('reset', 'Auth\LoginController@resetPasswordAPI');
 
-
 });
+
+
+Route::post('forget', 'Auth\LoginController@forgetPasswordAPI');
+
 
 //
 //    Route::resource('bio', 'bioRecords');
