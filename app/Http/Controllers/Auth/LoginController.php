@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\bioProfile;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
+use App\userDiet;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -83,10 +86,27 @@ class LoginController extends Controller
             $userL->remember_token = $loginToken;
             $userL->token_expire_time = date('Y/m/d H:i:s', time() + 10 * 60);
             $userL->save();
+
+
+            $userL_id = $userL->id;
+            $userL_standard = userDiet::where([['user_id', '=',$userL_id], ['kind', '=', 1]])->get();
+            $userL_weight = bioProfile
+                //::select(DB::raw('weight'))
+                ::where('user_id', '=',$userL_id)
+                ->orderBy('updated_at','desc')
+                ->first()->weight
+            ;
+//            dd($userL_weight);
+
             $response = array(
                 "remember_token" => $userL->remember_token,
                 "token_expire_time" => $userL->token_expire_time,
-                "user_id" => $userL->id
+                "user_id" => $userL_id,
+                "height_is_null"=> is_null($userL->height),
+                'weight_is_null'=> is_null($userL_weight),
+                "gender_is_null"=> is_null($userL->gender),
+                "birthday_is_null"=> is_null($userL->birthday),
+                "diet_standard_is_null" =>  is_null($userL_standard)
             );
             return response()->json(['success' => true, 'message' => "", 'data' => $response], 200);
 
