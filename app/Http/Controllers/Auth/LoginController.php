@@ -52,8 +52,8 @@ class LoginController extends Controller
         try {
             $this->validate($request, $rulesInput, $this->messageValidate);
         } catch (ValidationException $exception) {
-//            $errorMessage = $exception->validator->errors()->first();
-            $errorMessage = $exception->validator->getMessageBag();
+            $errorMessage = $exception->validator->errors()->first();
+//            $errorMessage = $exception->validator->getMessageBag();
 
             return $errorMessage;
         }
