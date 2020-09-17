@@ -54,7 +54,6 @@ class LoginController extends Controller
         } catch (ValidationException $exception) {
             $errorMessage = $exception->validator->errors()->first();
 //            $errorMessage = $exception->validator->getMessageBag();
-
             return $errorMessage;
         }
     }

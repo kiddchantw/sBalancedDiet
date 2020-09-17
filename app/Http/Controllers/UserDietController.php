@@ -296,8 +296,6 @@ class UserDietController extends Controller
         } else {
             return response()->json(['success' => false, 'message' => "update  error", 'data' => null], 400);
         }
-
-
     }
 
     /**

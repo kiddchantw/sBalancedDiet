@@ -4,6 +4,8 @@
     <list default="true" id="4d21c94e-af77-4809-a87f-8e982a1bac65" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/RegisterController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/RegisterController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/UserDietController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/UserDietController.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -165,7 +167,7 @@
       <workItem from="1599327839129" duration="1670000" />
       <workItem from="1599399754451" duration="5329000" />
       <workItem from="1599494724560" duration="249000" />
-      <workItem from="1599535204577" duration="106330000" />
+      <workItem from="1599535204577" duration="109091000" />
     </task>
     <servers />
   </component>

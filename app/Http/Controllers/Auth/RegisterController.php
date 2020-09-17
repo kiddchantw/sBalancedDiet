@@ -77,7 +77,7 @@ class RegisterController extends Controller
     {
         try {
             $rules = [
-                "name" => "required|string | between:6,12 ",
+                "name" => "required|string | between:1,10 ",
                 "email" => "required| email | unique:users,email",
                 "password" => "required|string| between:6,12 | regex:/^[A-Za-z0-9]+$/",
             ];
@@ -99,7 +99,6 @@ class RegisterController extends Controller
             foreach($errorObject as $key => $value) {
                 $errorMessage =  $value[0];
             }
-//            return response()->json(['message' => $errorMessage], 400);
             return response()->json(['success' => false, 'message' =>$errorMessage , 'data'=> null ],400);
 
         }
@@ -123,6 +122,5 @@ class RegisterController extends Controller
         ]);
 
         return response()->json(['success' => true , 'message' =>"register success , please login" , 'data'=>null ],200);
-//        return response()->json(['message' => 'register success , please login '], 200);
     }
 }
