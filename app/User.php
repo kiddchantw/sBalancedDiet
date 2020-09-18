@@ -77,4 +77,22 @@ class User extends Authenticatable
             ;
     }
 
+
+    //todo:check if null?
+    public function currentBio()
+    {
+        return $this->hasMany('App\bioProfile','user_id')
+            ->orderBy('updated_at','desc')
+            ->first()
+            ;
+    }
+
+    public function currentStandard()
+    {
+        return $this->hasMany(userDiet::class,'user_id')
+            ->select('fruits', 'vegetables', 'grains', 'nuts', 'proteins', 'dairy')
+            ->where('kind', '=', 1)
+            ->first();
+    }
+
 }

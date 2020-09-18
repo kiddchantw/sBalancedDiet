@@ -84,29 +84,28 @@ class LoginController extends Controller
 
             $userL = User::where('email', '=', $request->email)->first();
             $userL->remember_token = $loginToken;
-            $userL->token_expire_time = date('Y/m/d H:i:s', time() + 24*60*60);  //10 * 60
+            $userL->token_expire_time = date('Y/m/d H:i:s', time() + 24 * 60 * 60);  //10 * 60
             $userL->save();
 
 
             $userL_id = $userL->id;
-            $userL_standard = userDiet::where([['user_id', '=',$userL_id], ['kind', '=', 1]])->get();
-            $userL_weight = bioProfile
-                //::select(DB::raw('weight'))
-                ::where('user_id', '=',$userL_id)
-                ->orderBy('updated_at','desc')
-                ->first()->weight
-            ;
+//            $userL_standard = userDiet::where([['user_id', '=', $userL_id], ['kind', '=', 1]])->get();
+//            $userL_weight = bioProfile
+//                //::select(DB::raw('weight'))
+//                ::where('user_id', '=', $userL_id)
+//                ->orderBy('updated_at', 'desc')
+//                ->first()->weight;
 //            dd($userL_weight);
 
             $response = array(
                 "remember_token" => $userL->remember_token,
                 "token_expire_time" => $userL->token_expire_time,
                 "user_id" => $userL_id,
-                "height_is_null"=> is_null($userL->height),
-                'weight_is_null'=> is_null($userL_weight),
-                "gender_is_null"=> is_null($userL->gender),
-                "birthday_is_null"=> is_null($userL->birthday),
-                "diet_standard_is_null" =>  is_null($userL_standard)
+//                "height_is_null"=> is_null($userL->height),
+//                'weight_is_null'=> is_null($userL_weight),
+//                "gender_is_null"=> is_null($userL->gender),
+//                "birthday_is_null"=> is_null($userL->birthday),
+//                "diet_standard_is_null" =>  is_null($userL_standard)
             );
             return response()->json(['success' => true, 'message' => "", 'data' => $response], 200);
 
@@ -127,7 +126,24 @@ class LoginController extends Controller
         if ($inputToken !== null & $inputToken !== "") {
             $userA = User::where('remember_token', '=', $inputToken)->first();
             if ($userA) {
-                return $userA;
+//                return $userA;
+
+                $userW = $userA->currentBio();//->weight;
+
+                $response = array(
+                    "id" => $userA->id,
+                    "name" => $userA->name,
+                    "email" => $userA->email,
+                    "created_at" => $userA->created_at,
+                    "image_path" => $userA->image_path,
+                    "height" => $userA->height,
+                    "weight" => (is_null($userW)) ? null:$userW->weight,
+                    "gender" => $userA->birthday,
+                    "birthday" => $userA->birthday,
+                    "diet_standard" => $userA->currentStandard()
+                );
+                return response()->json(['success' => true, 'message' => "", 'data' => $response], 200);
+
             }
         }
     }
@@ -206,7 +222,7 @@ class LoginController extends Controller
     public function forgetPasswordAPI(Request $request)
     {
         $rules6 = [
-           "email" => "required| email | exists:users",
+            "email" => "required| email | exists:users",
             "password" => "required|string | between:6,12 | regex:/^[A-Za-z0-9]+$/"
         ];
         $validResult = $this->customValidate($request, $rules6);
@@ -216,7 +232,7 @@ class LoginController extends Controller
 
         $resetPW = Hash::make($request->password);
         User::where('email', '=', $request->email)
-            ->update(['password' => $resetPW],['token_expire_time' => Null]);
+            ->update(['password' => $resetPW], ['token_expire_time' => Null]);
 
         return response()->json(['success' => true, 'message' => "new password is ready, please login again", 'data' => null], 200);
 

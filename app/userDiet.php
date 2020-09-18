@@ -88,4 +88,10 @@ class userDiet extends Model
                 return 'undefined';
         }
     }
+
+
+    public function user()
+    {
+        return $this->belongsTo('App\User', 'user_id');
+    }
 }

@@ -2,7 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use App\bioProfile;
+use App\User;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -72,3 +73,11 @@ Route::post('diet', 'UserDietController@showDiet');
 Route::post('diet/day', 'UserDietController@showDietByDay');
 
 
+
+
+//測試用
+Route::get('testA',function(Request $request)
+{
+    $uuu = User::find(5)->currentStandard();//->first()->weight;
+    return $uuu;
+});
