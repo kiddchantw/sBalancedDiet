@@ -84,7 +84,7 @@ class LoginController extends Controller
 
             $userL = User::where('email', '=', $request->email)->first();
             $userL->remember_token = $loginToken;
-            $userL->token_expire_time = date('Y/m/d H:i:s', time() + 10 * 60);
+            $userL->token_expire_time = date('Y/m/d H:i:s', time() + 24*60*60);  //10 * 60
             $userL->save();
 
 
