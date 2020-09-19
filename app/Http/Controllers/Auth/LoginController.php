@@ -241,7 +241,7 @@ class LoginController extends Controller
         "name.unique" => "name exist",
         "height.integer" => "請輸入數字",
         "gender.in" => "請確認性別",
-//        "birthday.date_format" => "請確認日期格式",
+        "birthday.date_format" => "請確認日期格式",
     ];
 
 
