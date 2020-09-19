@@ -180,16 +180,7 @@ class LoginController extends Controller
     }
 
 
-    public $messageValidate = [
-        "password.required" => "請輸入password",
-        "password.regex" => "請確認password符合 A-Za-z0-9 ",
-        "password.between" => "password 字數需6~12",
-        "email.required" => "請輸入email",
-        "email.email" => "請確認格式",
-        "email.exists" => "請確認email",
-        "name.required" => "請輸入name",
-        "name.unique" => "name exist",
-    ];
+
 
     //API_6 reset
     public function resetPasswordAPI(Request $request)
@@ -236,6 +227,58 @@ class LoginController extends Controller
 
         return response()->json(['success' => true, 'message' => "new password is ready, please login again", 'data' => null], 200);
 
+    }
+
+
+    public $messageValidate = [
+        "password.required" => "請輸入password",
+        "password.regex" => "請確認password符合 A-Za-z0-9 ",
+        "password.between" => "password 字數需6~12",
+        "email.required" => "請輸入email",
+        "email.email" => "請確認格式",
+        "email.exists" => "請確認email",
+        "name.required" => "請輸入name",
+        "name.unique" => "name exist",
+        "height.integer" => "請輸入數字",
+        "gender.in" => "請確認性別",
+//        "birthday.date_format" => "請確認日期格式",
+    ];
+
+
+    //API_08_userProfile
+    public static $profileColumn = ['height', 'gender', 'birthday'];
+
+    public function editUserProfile(Request $request)
+    {
+
+        $rules6 = [
+            "height" => "nullable | integer",
+            "gender" => "nullable| in:male,female,default",
+            "birthday" => "nullable| date_format:Y-m-d",
+        ];
+        $validResult = $this->customValidate($request, $rules6);
+        if ($validResult != Null) {
+            return response()->json(['success' => false, 'message' => $validResult, 'data' => null], 400);
+        }
+
+
+        $userId = $request->user()->id;
+        $strAlert = "";
+        foreach (self::$profileColumn as $value) {
+            if ($request->filled($value)) {
+                //$userDiet->$value = $request->$value;
+                $userP = User::where('id', '=', $userId)->update([$value =>$request->$value]);
+                if ($userP == true) {
+                    $strAlert = $strAlert.$value.",";
+                }
+            }
+        }
+
+        if ($strAlert == ""){
+            return response()->json(['success' => false, 'message' => "update  error", 'data' => null], 400);
+        }else{
+            return response()->json(['success' => true, 'message' => $strAlert."update success", 'data' => null], 400);
+        }
     }
 
 }

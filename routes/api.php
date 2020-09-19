@@ -31,6 +31,7 @@ Route::middleware(['checkToken'])->group(function () {
     Route::post('logout', 'Auth\LoginController@logoutAPI');
     Route::post('uploadImageAPI', 'Auth\LoginController@uploadImageAPI');
     Route::post('reset', 'Auth\LoginController@resetPasswordAPI');
+    Route::post('profile', 'Auth\LoginController@editUserProfile');
 
 });
 

@@ -78,7 +78,7 @@ class User extends Authenticatable
     }
 
 
-    //todo:check if null?
+    //relations one to many
     public function currentBio()
     {
         return $this->hasMany('App\bioProfile','user_id')
