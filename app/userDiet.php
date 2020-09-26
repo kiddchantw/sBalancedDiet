@@ -60,9 +60,9 @@ class userDiet extends Model
         switch ($kind){
             case 0 :
                 return  'daily';
-            case 1 :
+            case 2 :
                 return 'doctor';
-            case 2:
+            case 1:
                 return 'personal';
             default:
                 return 'undefinded';

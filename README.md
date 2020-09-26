@@ -22,7 +22,7 @@ part 1.會員 API
 - [x]  登出
 - [x]  忘記密碼
 - [x]  修改密碼
-- [ ]  修改name
+- [x]  修改name
 - [ ]  delete user
 
 part 2. etic
@@ -52,14 +52,14 @@ part 4. Restful API water
        - type 0 daily
        - type 1 doctor/standard
 - [x] read by kind/standard
-- [ ] read detail by user id 
+- [x] read detail by user id 
     - 單日多餐 one object
     - 多日 object 
-- [ ] read detail by user id  with water summary And  filter someday
-- [ ] show
-- [ ] update
-- [ ] delete
-- [ ] compare one day real life with standard
+- [x] read detail by user id  with water summary And  filter someday
+- [x] show
+- [x] update
+- [x] delete
+- [x] compare one day real life with standard
 
 
 
