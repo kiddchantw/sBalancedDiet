@@ -138,7 +138,7 @@ class LoginController extends Controller
                     "image_path" => $userA->image_path,
                     "height" => $userA->height,
                     "weight" => (is_null($userW)) ? null:$userW->weight,
-                    "gender" => $userA->birthday,
+                    "gender" => $userA->gender,
                     "birthday" => $userA->birthday,
                     "diet_standard" => $userA->currentStandard()
                 );
