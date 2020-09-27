@@ -253,7 +253,7 @@ class LoginController extends Controller
 
         $rules6 = [
             "height" => "nullable | integer",
-            "gender" => "nullable| in:male,female,default",
+            "gender" => "nullable| in:male,female,others",
             "birthday" => "nullable| date_format:Y-m-d",
         ];
         $validResult = $this->customValidate($request, $rules6);
@@ -269,7 +269,7 @@ class LoginController extends Controller
                 //$userDiet->$value = $request->$value;
                 $userP = User::where('id', '=', $userId)->update([$value =>$request->$value]);
                 if ($userP == true) {
-                    $strAlert = $strAlert.$value.",";
+                    $strAlert = $value.",".$strAlert;
                 }
             }
         }
