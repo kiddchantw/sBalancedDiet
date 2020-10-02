@@ -19,6 +19,7 @@ class UserWaterController extends Controller
     {
         //
         echo "UserWaterController";
+//        echo userWater::all();
     }
 
     /**
