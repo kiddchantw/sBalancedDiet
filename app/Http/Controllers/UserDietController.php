@@ -303,7 +303,7 @@ class UserDietController extends Controller
     public function updateStandard(Request $request)
     {
         $updateUserID = $request->user()->id;
-        $userStandard = userDiet::where([['user_id', '=',$updateUserID], ['kind', '=', 1]])->first();
+        $userStandard = userDiet::where([['user_id', '=',$updateUserID], ['kind', '=', 1]])->firstOrFail();
         foreach (self::$dietColumn as $value) {
             if ($request->filled($value)) {
                 $userStandard->$value = $request->$value;
