@@ -33,6 +33,8 @@ Route::middleware(['checkToken'])->group(function () {
     Route::post('reset', 'Auth\LoginController@resetPasswordAPI');
     Route::post('profile', 'Auth\LoginController@editUserProfile');
 
+    Route::post('diet/standard', 'UserDietController@updateStandard');
+
 });
 
 

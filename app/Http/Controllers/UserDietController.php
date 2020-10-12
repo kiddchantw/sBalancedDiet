@@ -190,7 +190,6 @@ class UserDietController extends Controller
         $userId = $request->user_id;
 //
         $dataUserStandard = userDiet::where([['user_id', '=',$userId], ['kind', '=', 1]])->get();
-//        dd();
         if ($dataUserStandard->count() == 0)
         {
             return response()->json(['success' => false, 'message' =>"user diet standard error" , 'data'=> null ],400);
@@ -299,6 +298,26 @@ class UserDietController extends Controller
             return response()->json(['success' => false, 'message' => "update  error", 'data' => null], 400);
         }
     }
+
+    //API_36_update standard
+    public function updateStandard(Request $request)
+    {
+        $updateUserID = $request->user()->id;
+        $userStandard = userDiet::where([['user_id', '=',$updateUserID], ['kind', '=', 1]])->first();
+        foreach (self::$dietColumn as $value) {
+            if ($request->filled($value)) {
+                $userStandard->$value = $request->$value;
+            }
+            $userStandard->save();
+        }
+        if ($userStandard == true) {
+            return response()->json(['success' => true, 'message' => "update standard success", 'data' => null], 200);
+        } else {
+            return response()->json(['success' => false, 'message' => "update standard  error", 'data' => null], 400);
+        }
+    }
+
+
 
     /**
      * Remove the specified resource from storage.
