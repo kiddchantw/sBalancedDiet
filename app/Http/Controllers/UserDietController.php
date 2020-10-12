@@ -10,7 +10,7 @@ use Illuminate\Validation\ValidationException;
 
 class UserDietController extends Controller
 {
-    public static $dietColumn = ['fruits', 'vegetables', 'grains', 'nuts', 'proteins', 'dairy'];
+    public static $dietColumn = ['fruits', 'vegetables', 'grains', 'nuts', 'proteins', 'dairy','water'];
 
 
     /**
@@ -53,6 +53,7 @@ class UserDietController extends Controller
         "nuts.numeric"=> "請輸入堅果油脂數量",
         "proteins.numeric"=> "請輸入豆魚蛋肉類數量",
         "dairy.numeric"=> "請輸入乳製品數量",
+        "water.numeric"=> "請輸入水量",
 
 
         "start_date.date_format" => "請確認日期格式",
@@ -84,6 +85,7 @@ class UserDietController extends Controller
             "grains" => "numeric",
             "nuts" => "numeric",
             "dairy" => "numeric",
+            "water" => "numeric",
         ];
         $validResult = $this->customValidate($request, $rules);
         if ($validResult != Null) {

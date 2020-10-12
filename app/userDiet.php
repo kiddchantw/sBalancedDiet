@@ -19,7 +19,7 @@ class userDiet extends Model
     protected $fillable = ['user_id',
         'created_at','updated_at','deleted_at',
         'kind','diet_type',
-        'fruits','vegetables','grains','nuts','proteins','dairy'
+        'fruits','vegetables','grains','nuts','proteins','dairy','water'
     ];
 
     protected $hidden = ['deleted_at','created_at'];
