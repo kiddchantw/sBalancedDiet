@@ -63,3 +63,9 @@ part 4. Restful API water
 
 
 
+### update log
+
+2020.10.12 
+- feat API 31 add water column
+- add API 36 update user/doctor standard 
+
