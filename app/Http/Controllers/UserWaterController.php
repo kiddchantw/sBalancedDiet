@@ -34,7 +34,7 @@ class UserWaterController extends Controller
 
 
     public $messageValidate = [
-        "water.integer"=> "請輸入正整數",
+        "water.numeric"=> "請輸入水量",
         "water.required" => "請輸入飲水量",
         "user_id.required" => "請輸入user id",
     ];
@@ -61,7 +61,7 @@ class UserWaterController extends Controller
     {
         $rules = [
             "user_id" => "required|string | regex:/^[0-9]+$/",
-            "water" => "required | integer "
+            "water" => "required | numeric| between:0,99.99 "
         ];
         $validResult = $this->customValidate($request, $rules);
         if (!is_null($validResult)){
