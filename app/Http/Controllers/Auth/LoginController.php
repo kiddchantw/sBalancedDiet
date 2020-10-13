@@ -244,6 +244,8 @@ class LoginController extends Controller
         "birthday.date_format" => "請確認日期格式",
         "name.between" => "name 字數需6~12",
         "height.between" => "請輸入數字0~250.0",
+        "height.regex" => "小數點後1位",
+
 
     ];
 
@@ -254,7 +256,7 @@ class LoginController extends Controller
     public function editUserProfile(Request $request)
     {
         $rules6 = [
-            "height" => "nullable | numeric |  between:0,250.0",
+            "height" => "nullable | numeric | regex:/^[0-9]+(\.[0-9]??)?$/ |  between:0,250.0",
             "gender" => "nullable| in:male,female,others",
             "birthday" => "nullable| date_format:Y-m-d",
             'name' => "nullable | between:1,10"
