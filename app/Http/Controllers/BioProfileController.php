@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\bioProfile;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class BioProfileController extends Controller
 {
@@ -12,7 +13,6 @@ class BioProfileController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-
 
 
     public function index()
@@ -41,6 +41,14 @@ class BioProfileController extends Controller
      */
     public function store(Request $request)
     {
+        $rules11 = [
+            "weight" => "required | numeric  | regex:/^[0-9]+(\.[0-9]??)?$/ |  between:0,250.0",
+        ];
+        $validResult = $this->customValidate($request, $rules11);
+        if ($validResult != Null) {
+            return response()->json(['success' => false, 'message' => $validResult, 'data' => null], 400);
+        }
+
 
         $userWeight = (isset($request->weight)) ? $request->weight: 0;
         $userSystolic = (isset($request->systolic)) ? $request->systolic: 0;
@@ -117,6 +125,15 @@ class BioProfileController extends Controller
     {
 //        dd("update");
 //        dd($request->all());
+        $rules15 = [
+            "weight" => "required | numeric  | regex:/^[0-9]+(\.[0-9]??)?$/ |  between:0,250.0",
+        ];
+        $validResult = $this->customValidate($request, $rules15);
+        if ($validResult != Null) {
+            return response()->json(['success' => false, 'message' => $validResult, 'data' => null], 400);
+        }
+
+
 
         if (isset($request->weight) ) {
             $bioProfile->weight =  $request->weight ;
@@ -152,5 +169,22 @@ class BioProfileController extends Controller
         $bioProfile->delete();
         return response()->json(['success' => true , 'message' =>"delete success" , 'data'=>null ],200);
     }
+
+
+    public function customValidate(Request $request, array $rulesInput)
+    {
+        try {
+            $this->validate($request, $rulesInput, $this->messageValidate);
+        } catch (ValidationException $exception) {
+            $errorMessage = $exception->validator->errors()->first();
+            return $errorMessage;
+        }
+    }
+
+    public $messageValidate = [
+        "weight.required" =>"請輸入體重",
+        "weight.between" => "請輸入數字0~300.0",
+        "weight.regex" => "小數點後1位"
+    ];
 
 }

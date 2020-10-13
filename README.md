@@ -66,7 +66,8 @@ part 4. Restful API water
 ### update log
 
 2020.10.13
-
+- fix:API08 name height column type
+- fix:API11、15 weight column type
 
 2020.10.12 
 - feat API 31 : add water column
