@@ -239,22 +239,25 @@ class LoginController extends Controller
         "email.exists" => "請確認email",
         "name.required" => "請輸入name",
         "name.unique" => "name exist",
-        "height.integer" => "請輸入數字",
+        "height.numeric" => "請輸入數字",
         "gender.in" => "請確認性別",
         "birthday.date_format" => "請確認日期格式",
+        "name.between" => "name 字數需6~12",
+        "height.between" => "請輸入數字0~250.0",
+
     ];
 
 
     //API_08_userProfile
-    public static $profileColumn = ['height', 'gender', 'birthday'];
+    public static $profileColumn = ['name','height', 'gender', 'birthday'];
 
     public function editUserProfile(Request $request)
     {
-
         $rules6 = [
-            "height" => "nullable | integer",
+            "height" => "nullable | numeric |  between:0,250.0",
             "gender" => "nullable| in:male,female,others",
             "birthday" => "nullable| date_format:Y-m-d",
+            'name' => "nullable | between:1,10"
         ];
         $validResult = $this->customValidate($request, $rules6);
         if ($validResult != Null) {
