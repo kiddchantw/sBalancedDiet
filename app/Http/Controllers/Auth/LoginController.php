@@ -263,7 +263,7 @@ class LoginController extends Controller
         ];
         $validResult = $this->customValidate($request, $rules6);
         if ($validResult != Null) {
-            return response()->json(['success' => false, 'message' => $validResult, 'data' => null], 200);
+            return response()->json(['success' => false, 'message' => $validResult, 'data' => null], 400);
         }
 
 
