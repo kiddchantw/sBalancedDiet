@@ -77,7 +77,7 @@ class userDiet extends Model
             case 1 :
                 return 'breakfast';
             case 2:
-                return 'launch';
+                return 'lunch';
             case 3:
                 return 'dessert';
             case 4:

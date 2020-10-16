@@ -61,7 +61,7 @@ class LoginController extends Controller
         }
     }
 
-    //API_2
+    //API_02
     public function loginAPI(Request $request)
     {
         $rules = [
@@ -149,7 +149,7 @@ class LoginController extends Controller
     }
 
 
-//API_4
+//API_04
     public function logoutAPI(Request $request)
     {
         $user = $request->user();
@@ -161,7 +161,7 @@ class LoginController extends Controller
     }
 
 
-    //API_5
+    //API_05
     public function uploadImageAPI(Request $request)
     {
         $userPhotoId = $request->user()->id;
@@ -182,7 +182,7 @@ class LoginController extends Controller
 
 
 
-    //API_6 reset
+    //API_06 reset
     public function resetPasswordAPI(Request $request)
     {
         $rules6 = [
