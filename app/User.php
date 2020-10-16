@@ -90,7 +90,7 @@ class User extends Authenticatable
     public function currentStandard()
     {
         return $this->hasMany(userDiet::class,'user_id')
-            ->select('fruits', 'vegetables', 'grains', 'nuts', 'proteins', 'dairy')
+            ->select('fruits', 'vegetables', 'grains', 'nuts', 'proteins', 'dairy','water')
             ->where('kind', '=', 1)
             ->first();
     }
