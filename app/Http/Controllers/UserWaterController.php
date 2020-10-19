@@ -173,7 +173,7 @@ class UserWaterController extends Controller
     public function update(Request $request, userWater $userWater)
     {
         $rules = [
-            "water" => "required | integer"
+            "water" => "required | numeric| between:0,99.99 "
         ];
         $validResult = $this->customValidate($request, $rules);
 
