@@ -170,6 +170,8 @@ class UserWaterController extends Controller
      * @param \App\userWater $userWater
      * @return \Illuminate\Http\Response
      */
+
+    //API_25_water_update
     public function update(Request $request, userWater $userWater)
     {
         $rules = [

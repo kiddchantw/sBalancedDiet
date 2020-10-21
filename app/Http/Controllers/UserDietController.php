@@ -46,7 +46,6 @@ class UserDietController extends Controller
         "user_id.exist" => "請確認使用者帳號",
         "kind.required" => "請確認紀錄種類",
         "diet_type.required" => "請確認用餐種類",
-
         "fruits.numeric"=> "請輸入水果數量",
         "vegetables.numeric"=> "請輸入蔬菜數量",
         "grains.numeric"=> "請輸入全穀雜糧類數量",
@@ -54,11 +53,8 @@ class UserDietController extends Controller
         "proteins.numeric"=> "請輸入豆魚蛋肉類數量",
         "dairy.numeric"=> "請輸入乳製品數量",
         "water.numeric"=> "請輸入水量",
-
-
         "start_date.date_format" => "請確認日期格式",
         "end_date.date_format" => "請確認日期格式",
-
     ];
 
 
@@ -73,6 +69,7 @@ class UserDietController extends Controller
         }
     }
 
+    //API_31_diet_add
     public function store(Request $request)
     {
 
@@ -92,6 +89,21 @@ class UserDietController extends Controller
             return response()->json(['success' => false, 'message' =>$validResult , 'data'=> null ],400);
         }
 
+
+
+
+        $testDiet = userDiet::query()
+            ->where([['user_id', '=', $userId], ['kind', '=', 0]])
+            ->orderBy('created_at', 'asc')
+            ->when($startDate, function ($query, $s) {
+                return $query->where('created_at', '>=', $s);
+            })
+            ->when($endDate, function ($query, $e) {
+                return $query->where('created_at', '<=', $e);
+            })
+            ->get();
+
+
         //todo:create or update有沒有更好的寫法
         $newRecord = userDiet::create($request->all());
         if ($newRecord) {
@@ -109,13 +121,15 @@ class UserDietController extends Controller
      * @param \App\userDiet $userDiet
      * @return \Illuminate\Http\Response
      */
+
+    //API_32_diet
     public function show(userDiet $userDiet)
     {
         //
         return response()->json(['success' => true, 'message' => "", 'data' => $userDiet], 200);
     }
 
-
+    //API_35_showEverydayDeficiency
     public function showDiet(Request $request)
     {
 
@@ -157,15 +171,16 @@ class UserDietController extends Controller
 
             $data = userDiet::query()
                 ->where([['user_id', '=', $userId], ['kind', '=', $standardKind]])
-                ->orderBy('updated_at', 'asc')
+                ->orderBy('created_at', 'asc')
                 ->when($startDate, function ($query, $s) {
-                    return $query->where('updated_at', '>=', $s);
+                    return $query->where('created_at', '>=', $s);
                 })
                 ->when($endDate, function ($query, $e) {
-                    return $query->where('updated_at', '<=', $e);
+                    return $query->where('created_at', '<=', $e);
                 })
                 ->get();
-
+                //created_at
+                //updated_at
         }
 
         return response()->json(['success' => true, 'message' => "", 'data' => $data], 200);
