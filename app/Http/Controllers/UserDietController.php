@@ -134,14 +134,14 @@ class UserDietController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    //API_32_diet
     public function show(userDiet $userDiet)
     {
         //
         return response()->json(['success' => true, 'message' => "", 'data' => $userDiet], 200);
     }
 
-    //API_35_showEverydayDeficiency
+
+    //API_32_diet
     public function showDiet(Request $request)
     {
 
@@ -200,7 +200,7 @@ class UserDietController extends Controller
 
     }
 
-
+    //API_35_showEverydayDeficiency
     public function showDietByDay(Request $request)
     {
         $rules = [
@@ -239,7 +239,7 @@ class UserDietController extends Controller
         $dateE = $request->end_date;
 
         $dataOneDay = userDiet::select([
-            DB::raw('DATE(updated_at) as day'),
+            DB::raw('DATE(created_at) as day'), //            DB::raw('DATE(updated_at) as day'),
             DB::raw('sum(fruits) as A'),
             DB::raw('sum(vegetables) as B'),
             DB::raw('sum(grains) as c'),
@@ -254,6 +254,11 @@ class UserDietController extends Controller
             ->whereBetween('day', [$dateS, $dateE])->values();
 
         $dayCount = $dataOneDay->count();
+        if ($dayCount == 0)
+        {
+            return response()->json(['success' => false, 'message' =>"no data between start date and end date" , 'data'=> null ],400);
+        }
+
         $result = array();
         for ($j = 0; $j < $dayCount; $j++) {
             $cQuery = $dataOneDay->get($j);
@@ -281,7 +286,6 @@ class UserDietController extends Controller
             }
             $responseloop['deficiency'] = $response;
             array_push($result, $responseloop);
-
 
         }
 
