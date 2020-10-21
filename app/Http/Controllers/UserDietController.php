@@ -71,49 +71,61 @@ class UserDietController extends Controller
 
     //API_31_diet_add
     public function store(Request $request)
-    {
+        {
 
-        $rules = [
-            "user_id" => "required ",
-            "kind" => "required",
-            "diet_type" => "required",
-            "fruits" => "numeric",
-            "vegetables" => "numeric",
-            "grains" => "numeric",
-            "nuts" => "numeric",
-            "dairy" => "numeric",
-            "water" => "numeric",
-        ];
-        $validResult = $this->customValidate($request, $rules);
-        if ($validResult != Null) {
-            return response()->json(['success' => false, 'message' =>$validResult , 'data'=> null ],400);
+            $rules = [
+                "user_id" => "required ",
+                "kind" => "required",
+                "diet_type" => "required",
+                "fruits" => "numeric",
+                "vegetables" => "numeric",
+                "grains" => "numeric",
+                "nuts" => "numeric",
+                "dairy" => "numeric",
+                "water" => "numeric",
+            ];
+            $validResult = $this->customValidate($request, $rules);
+            if ($validResult != Null) {
+                return response()->json(['success' => false, 'message' =>$validResult , 'data'=> null ],400);
+            }
+
+
+
+            $startDate = Carbon::parse(today())->format('Y-m-d H:i:s');
+            $endDate = Carbon::parse( today())->format('Y-m-d H:i:s');
+            $checkD = userDiet::query()
+                ->where( [
+                    ['user_id', '=', $request->user_id ],
+                    ['diet_type', '=', $request->diet_type]
+                ])
+//                ->when($startDate, function ($query, $s) {
+//                    return $query->where('created_at', '>=', $s);
+//                })
+//                ->when($endDate, function ($query, $e) {
+//                    return $query->where('created_at', '<=', $e);
+//                })
+                ->whereDate('created_at', Carbon::today())
+//                ->whereBetween('created_at', [ Carbon::yesterday()  , Carbon::today() ])
+//                ->where('created_at','>=', Carbon::yesterday())
+//                ->where('created_at','<', Carbon::today())
+                ->get();
+//            var_dump($checkD->all() == null);
+
+            if ($checkD->all() == null) {
+                //todo:create or update有沒有更好的寫法
+                $newRecord = userDiet::create($request->all());
+                if ($newRecord) {
+                    return response()->json(['success' => true, 'message' => "add success", 'data' => null], 200);
+                } else {
+                    return response()->json(['success' => false, 'message' => "add error", 'data' => null], 400);
+                }
+            }else{
+                return response()->json(['success' => false, 'message' => "add repeat error", 'data' => null], 400);
+            }
+
+//            dd($checkD);
+
         }
-
-
-
-
-        $testDiet = userDiet::query()
-            ->where([['user_id', '=', $userId], ['kind', '=', 0]])
-            ->orderBy('created_at', 'asc')
-            ->when($startDate, function ($query, $s) {
-                return $query->where('created_at', '>=', $s);
-            })
-            ->when($endDate, function ($query, $e) {
-                return $query->where('created_at', '<=', $e);
-            })
-            ->get();
-
-
-        //todo:create or update有沒有更好的寫法
-        $newRecord = userDiet::create($request->all());
-        if ($newRecord) {
-            return response()->json(['success' => true, 'message' => "add success", 'data' => null], 200);
-        } else {
-            return response()->json(['success' => false, 'message' => "add error", 'data' => null], 400);
-        }
-
-
-    }
 
     /**
      * Display the specified resource.
