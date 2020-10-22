@@ -113,33 +113,50 @@ class BioProfileController extends Controller
         $dateStart = $request->start_date;
         $dateEnd = $request->end_date;
 
-//        $now = strtotime($dateEnd); // or your date as well
-//        $your_date = strtotime("$dateStart");
-//        $datediff = $now - $your_date;
-//
-//        echo round($datediff / (60 * 60 * 24));
+        $dataT = bioProfile::where('user_id','=',$request->user()->id)
+            ->whereBetween('created_at', [$dateStart." 00:00:00",$dateEnd." 23:59:59"])
+            ->get();
+//        echo  $dataT ;
+//        echo "\n";
+
+        $arrayORM = array();
+
+        foreach ($dataT as $bioProfile){
+//            echo  Carbon::parse($bioProfile->created_at)->format('Y-m-d')." : ".$bioProfile->weight."\n";
+            $keyT =  Carbon::parse($bioProfile->created_at)->format('Y-m-d');
+            $valueT = $bioProfile->weight;
+            $arrayORM[$keyT] =  $valueT;
+        }
+//        var_dump( $arrayORM );
 
 
-//        $earlier = new DateTime("2010-07-06");
-//        $later = new DateTime("2010-07-09");
-//
-//        $diff = $later->diff($earlier)->format("%a");
 
         $datetime1 = date_create($dateStart);
         $datetime2 = date_create($dateEnd);
         $interval = date_diff($datetime1, $datetime2) ->d ;
 
-//        dd(  $interval );
+
+        $arr1 = array();
 
         for ($x = 0; $x <= $interval ; $x++) {
-//            $toA = Carbon::createFromFormat('Y-m-d', $dateStart)->addDays($x);
-//            $toA = $datetime1->addDays($x);
-            $toA = date('Y-m-d', strtotime($dateStart. ' + '.$x .'days'));
-//            $newDate = strtotime($myDate . '+ '.$nDays.'days');
 
-            echo "The $x day is:  $toA";
-            echo '<br>';
+            $toA = date('Y-m-d', strtotime($dateStart. ' + '.$x .'days'));
+
+//            echo "The $x day is:  $toA";
+//            echo '<br>';
+
+            $responseloop = array();
+            $responseloop['date'] = $toA;
+            if (array_key_exists($toA, $arrayORM)) {
+                $responseloop['weight'] = $arrayORM[$toA] ;
+            }else{
+                $responseloop['weight'] = null ;
+            }
+
+            array_push($arr1, $responseloop);
         }
+
+        return $arr1;
 
 //        $diff = round(strtotime($dateEnd) - strtotime($dateStart));
 ////        $interval = $d1->diff($d2);
