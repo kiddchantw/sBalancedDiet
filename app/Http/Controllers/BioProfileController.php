@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\bioProfile;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
@@ -39,6 +40,8 @@ class BioProfileController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+    //API_11_bioProfile_add
     public function store(Request $request)
     {
         $rules11 = [
@@ -90,6 +93,7 @@ class BioProfileController extends Controller
         return response()->json(['success' => true , 'message' =>"" , 'data'=>$bioProfile ],200);
     }
 
+    //API_12_bio_showUserBio
     public function showByUser($id)
     {
         $id = intval($id);
@@ -99,7 +103,100 @@ class BioProfileController extends Controller
         } else{
             return response()->json(['success' => false, 'message' =>"user id error" , 'data'=> null ],400);
         }
+    }
 
+
+    //API_016_showWeight
+    public function showWeight(Request $request)
+    {
+//        $request->user()->id;
+        $dateStart = $request->start_date;
+        $dateEnd = $request->end_date;
+
+//        $now = strtotime($dateEnd); // or your date as well
+//        $your_date = strtotime("$dateStart");
+//        $datediff = $now - $your_date;
+//
+//        echo round($datediff / (60 * 60 * 24));
+
+
+//        $earlier = new DateTime("2010-07-06");
+//        $later = new DateTime("2010-07-09");
+//
+//        $diff = $later->diff($earlier)->format("%a");
+
+        $datetime1 = date_create($dateStart);
+        $datetime2 = date_create($dateEnd);
+        $interval = date_diff($datetime1, $datetime2) ->d ;
+
+//        dd(  $interval );
+
+        for ($x = 0; $x <= $interval ; $x++) {
+//            $toA = Carbon::createFromFormat('Y-m-d', $dateStart)->addDays($x);
+//            $toA = $datetime1->addDays($x);
+            $toA = date('Y-m-d', strtotime($dateStart. ' + '.$x .'days'));
+//            $newDate = strtotime($myDate . '+ '.$nDays.'days');
+
+            echo "The $x day is:  $toA";
+            echo '<br>';
+        }
+
+//        $diff = round(strtotime($dateEnd) - strtotime($dateStart));
+////        $interval = $d1->diff($d2);
+////        $diffInDays  = $diff->d; //21
+//
+//
+//
+//        dd($diff/60/60/24);
+
+
+//
+//        return bioProfile::where('user_id','=',$request->user()->id)
+//            ->whereBetween('created_at', [$dateStart." 00:00:00",$dateEnd." 23:59:59"])
+//            ->get();
+
+
+        //error
+//        $testB = bioProfile::where('user_id','=',$request->user()->id)
+//            ->whereRaw('created_at + interval 1 day >= ?', [$dateStart])
+//            ->whereRaw('created_at + interval 1 day < ?', [$dateEnd])
+//            ->get();
+//
+//        return $testB ;
+
+
+//        foreach (Carbon::range($dateStart, $dateEnd) as $dateT ) {
+//            echo $dateT ;
+//        }
+
+
+//        $date = date_create('2000-01-01');
+//        date_add($date, date_interval_create_from_date_string('10 days'));
+//        echo date_format($date, 'Y-m-d');
+
+//        echo Carbon::now()->addDays(1);
+
+//        $days = $dateEnd->diffInDays($dateStart);
+
+//        $days=date_diff($startDate,$endDate);
+//        var_dump($days);
+//
+//        $to = Carbon::createFromFormat('Y-m-d H:s:i', $dateStart." 00:00:00");
+//        $from = Carbon::createFromFormat('Y-m-d H:s:i', $dateEnd." 23:59:59");
+//
+//
+//
+//        $diff_in_days = $to->diffInDays($from);
+//
+//        print_r($diff_in_days); // Output:
+//        echo '<br>';
+//
+//        for ($x = 0; $x < $diff_in_days ; $x++) {
+//            $toA = Carbon::createFromFormat('Y-m-d', $dateStart)->addDays($x);
+////            $toA = $dateStart->addDays($x);
+//            echo "The $x day is:  $toA";
+//            echo '<br>';
+//        }
     }
 
 
@@ -112,6 +209,7 @@ class BioProfileController extends Controller
     public function edit(bioProfile $bioProfile)
     {
         //
+
     }
 
     /**
@@ -121,10 +219,9 @@ class BioProfileController extends Controller
      * @param  \App\bioProfile  $bioProfile
      * @return \Illuminate\Http\Response
      */
+    //Api_15_bio_updat
     public function update(Request $request, bioProfile $bioProfile)
     {
-//        dd("update");
-//        dd($request->all());
         $rules15 = [
             "weight" => "required | numeric  | regex:/^[0-9]+(\.[0-9]??)?$/ |  between:0,250.0",
         ];

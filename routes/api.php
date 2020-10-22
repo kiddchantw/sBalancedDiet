@@ -35,6 +35,9 @@ Route::middleware(['checkToken'])->group(function () {
 
     Route::post('diet/standard', 'UserDietController@updateStandard');
 
+    //API_016_showWeight
+    Route::post('userWeight', 'BioProfileController@showWeight');
+
 });
 
 
